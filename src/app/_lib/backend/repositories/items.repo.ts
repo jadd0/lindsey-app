@@ -12,14 +12,14 @@ import { Item, ItemUpdate } from '../../types';
 import { db } from '../../db/firebase';
 
 // Inserts data with an auto-generated ID into the "items" collection
-export const addItem = async (item: Item): Promise<string> => {
+export const addItem = async (item: Item): Promise<boolean> => {
 	try {
 		const docRef = await addDoc(collection(db, 'items'), {
 			...item,
 			createdAt: new Date(),
 		});
 		console.log('Document written with ID: ', docRef.id);
-		return docRef.id;
+		return true;
 	} catch (error) {
 		throw new Error(
 			`Error adding item: ${
@@ -130,4 +130,13 @@ export const deleteItemById = async (id: string) => {
 		);
 	}
 	return true;
+};
+
+export const itemsRepository = {
+	addItem,
+	getItem,
+	getAllItems,
+	getItemsByCategory,
+	updateItemById,
+	deleteItemById,
 };
