@@ -1,27 +1,53 @@
 {
-  "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/_contexts/auth.tsx"],
-  "exclude": ["node_modules"]
+	"compilerOptions": {
+		"target": "ES2017",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"incremental": true,
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"paths": {
+			"@/*": ["./src/*"],
+			"@/lib/*": ["./src/app/_lib/*"],
+
+			"@/frontend/*": ["./src/app/_lib/frontend/*"],
+
+      // Backend lib paths
+			"@/backend/*": ["./src/app/_lib/backend/*"],
+			"@/repositories/*": ["./src/app/_lib/backend/repositories/*"],
+			"@/services/*": ["./src/app/_lib/backend/services/*"],
+			"@/middleware/*": ["./src/app/_lib/backend/middleware/*"],
+
+
+			"@/firebase/*": ["./src/app/_lib/firebase/*"],
+
+			"@/components/*": ["./src/app/_components/*"],
+			"@/hooks/*": ["./src/app/_hooks/*"],
+			"@/contexts/*": ["./src/app/_contexts/*"],
+			"@/utils/*": ["./src/app/_utils/*"],
+
+			"@/types/*": ["./src/app/_lib/types/index.js"],
+			"@/env": ["./src/env.js"]
+		}
+	},
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts",
+		"src/app/_contexts/auth.tsx"
+	],
+	"exclude": ["node_modules"]
 }

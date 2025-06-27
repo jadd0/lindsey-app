@@ -9,7 +9,7 @@ import {
 	deleteDoc,
 } from 'firebase/firestore';
 import { Item, ItemUpdate } from '../../types';
-import { db } from '../../db/firebase';
+import { db } from '../../firebase/firebase';
 
 // Inserts data with an auto-generated ID into the "items" collection
 export const addItem = async (item: Item): Promise<boolean> => {
