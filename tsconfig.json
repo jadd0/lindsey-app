@@ -24,19 +24,18 @@
 
 			"@/frontend/*": ["./src/app/_lib/frontend/*"],
 
-      // Backend lib paths
+			// Backend lib paths
 			"@/backend/*": ["./src/app/_lib/backend/*"],
 			"@/repositories/*": ["./src/app/_lib/backend/repositories/*"],
 			"@/services/*": ["./src/app/_lib/backend/services/*"],
 			"@/middleware/*": ["./src/app/_lib/backend/middleware/*"],
-
 
 			"@/firebase/*": ["./src/app/_lib/firebase/*"],
 
 			"@/components/*": ["./src/app/_components/*"],
 			"@/hooks/*": ["./src/app/_hooks/*"],
 			"@/contexts/*": ["./src/app/_contexts/*"],
-			"@/utils/*": ["./src/app/_utils/*"],
+			"@/utils/*": ["src/app/_lib/utils/*"],
 
 			"@/types/*": ["./src/app/_lib/types/index.js"],
 			"@/env": ["./src/env.js"]

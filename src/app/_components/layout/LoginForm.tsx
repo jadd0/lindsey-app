@@ -1,7 +1,5 @@
-'use client';
-
 import type React from 'react';
-import { cn } from '@/app/_lib/utils';
+import { cn } from '../../_lib/utils';
 import { Button } from '@/components/ui/button';
 import {
 	Card,
@@ -69,41 +67,39 @@ const GoogleButton = () => {
 	);
 };
 
-export default function LoginForm({
+export function LoginForm({
 	className,
 	...props
 }: React.ComponentPropsWithoutRef<'div'>) {
 	return (
-		<div className="w-screen h-screen flex items-center justify-center">
-			<div
-				className={cn('w-96 inline-block overflow-hidden', className)}
-				{...props}
-			>
-				<div className="flex flex-col w-full h-fit bg-accent pb-3 rounded-xl border-1 border-accent">
-					<Card className="w-full h-full pt-12 justify-between border-1 border-accent rounded-xl">
-						<CardHeader className="text-center">
-							<CardTitle className="text-3xl text-center flex flex-col space-y-10">
-								<span className="flex items-center justify-center text-nowrap">
-									Sign in to&nbsp;
-									<p className="font-black font-stretch-ultra-condensed">
-										Lindsey's App
-									</p>
-								</span>
-							</CardTitle>
-							<CardDescription className="text-muted-foreground text-base">
-								Welcome back! Please sign in to continue
-							</CardDescription>
-						</CardHeader>
-						<CardContent>
-							<div className="flex flex-col gap-4 mt-10">
-								<GoogleButton />
-							</div>
-						</CardContent>
-					</Card>
-					<div className=" mx-8 py-2 text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  mt-4">
-						By clicking continue, you agree to our{' '}
-						<a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
-					</div>
+		<div
+			className={cn('w-96 inline-block overflow-hidden', className)}
+			{...props}
+		>
+			<div className="flex flex-col w-full h-fit bg-accent pb-3 rounded-xl border-1 border-accent">
+				<Card className="w-full h-full pt-12 justify-between border-1 border-accent rounded-xl">
+					<CardHeader className="text-center">
+						<CardTitle className="text-3xl text-center flex flex-col space-y-10">
+							<span className="flex items-center justify-center text-nowrap">
+								Sign in to&nbsp;
+								<p className="font-black font-stretch-ultra-condensed">
+									Lindsey's App
+								</p>
+							</span>
+						</CardTitle>
+						<CardDescription className="text-muted-foreground text-base">
+							Welcome back! Please sign in to continue
+						</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<div className="flex flex-col gap-4 mt-10">
+							<GoogleButton />
+						</div>
+					</CardContent>
+				</Card>
+				<div className=" mx-8 py-2 text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  mt-4">
+					By clicking continue, you agree to our{' '}
+					<a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
 				</div>
 			</div>
 		</div>

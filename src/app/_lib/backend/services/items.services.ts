@@ -1,6 +1,6 @@
 import { Item, ItemUpdate } from '../../types';
 import { itemsRepository } from '../repositories/items.repo';
-import { capitaliseFirstLetter } from '@/app/_utils/usefulFunctions';
+import { capitaliseFirstLetter } from '@/app/_lib/utils/usefulFunctions';
 
 // todo: capitalise first letter of words
 
