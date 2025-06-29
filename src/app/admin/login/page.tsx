@@ -11,6 +11,8 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { signInWithGoogle } from '@/app/_lib/auth/auth';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 /**
  * Button component for OAuth providers
@@ -49,8 +51,14 @@ const OauthProviderButton = ({
  * Google login button
  */
 const GoogleButton = () => {
+	const router = useRouter();
+
 	const handleGoogleLogin = async () => {
-		await signInWithGoogle();
+		const user = await signInWithGoogle();
+		if (user) {
+			// Redirect to the admin dashboard after successful login
+			router.push('/admin');
+		}
 	};
 
 	return (
