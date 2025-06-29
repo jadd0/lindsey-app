@@ -1,16 +1,16 @@
-"use client"
+'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged } from '@/firebase/auth';
 
 interface AuthContextType {
 	user: any;
-	loading: boolean;
+	isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({
 	user: null,
-	loading: true,
+	isLoading: true,
 });
 
 export function useAuth() {
@@ -23,13 +23,13 @@ export function useAuth() {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const [user, setUser] = useState(null);
-	const [loading, setLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		// Your authentication logic here
 		const unsubscribe = onAuthStateChanged((user) => {
 			setUser(user);
-			setLoading(false);
+			setIsLoading(false);
 		});
 
 		return unsubscribe;
@@ -37,7 +37,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 	const value = {
 		user,
-		loading,
+		isLoading,
 	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
