@@ -35,9 +35,12 @@
 			"@/components/*": ["./src/app/_components/*"],
 			"@/hooks/*": ["./src/app/_hooks/*"],
 			"@/contexts/*": ["./src/app/_contexts/*"],
-			"@/utils/*": ["src/app/_lib/utils/*"],
+			"@/utils/*": ["./src/app/_lib/utils/*"],
 
-			"@/types/*": ["./src/app/_lib/types/index.js"],
+			"@/types/*": ["./src/app/shared/types/index.js"],
+			"@/constants/*": ["./src/app/shared/constants/index.js"],
+			"@/validation/*": ["./src/app/shared/validation/index.js"],
+
 			"@/env": ["./src/env.js"]
 		}
 	},

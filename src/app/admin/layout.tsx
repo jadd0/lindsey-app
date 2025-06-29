@@ -20,7 +20,7 @@ export default function AdminLayout({
 
 	if (isLoading) {
 		return (
-			<div className="flex items-center justify-center min-h-screen">
+			<div className="font-sans flex items-center justify-center min-h-screen">
 				<div className="text-lg">Loading...</div>
 			</div>
 		);
@@ -31,9 +31,7 @@ export default function AdminLayout({
 	}
 
 	return (
-		<div className="admin-layout">
-
-
+		<div className="font-sans">
 			<main className="p-6">{children}</main>
 		</div>
 	);
