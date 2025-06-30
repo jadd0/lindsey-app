@@ -1,9 +1,9 @@
-"use server"
+'use client';
 
 import { useState } from 'react';
 import { MultipleImageUploader } from '@/components/image/upload/MultipleImageUploader';
 import ItemInput from './ItemInput';
-import { itemsServices } from '@/app/_lib/backend/services/items.services';
+import { createItemAction } from '@/actions/items.actions';
 
 export default function CreateItem() {
 	const [title, setTitle] = useState('');
@@ -19,7 +19,7 @@ export default function CreateItem() {
 				category,
 				price,
 				link,
-				imageUrls
+				imageUrls,
 			};
 
 			const response = await itemsServices.addItem(item);
@@ -29,11 +29,12 @@ export default function CreateItem() {
 		}
 	}
 
-	return <div className="flex flex-col items-center justify-center">
-		<ItemInput type="title" setValue={setTitle} />
-		<ItemInput type="description" setValue={setDescription} />
-		<ItemInput type="price" setValue={setPrice} />
-		<ItemInput type="link" setValue={setLink} />
-
-	</div>;
+	return (
+		<div className="flex flex-col items-center justify-center">
+			<ItemInput type="title" setValue={setTitle} />
+			<ItemInput type="description" setValue={setDescription} />
+			<ItemInput type="price" setValue={setPrice} />
+			<ItemInput type="link" setValue={setLink} />
+		</div>
+	);
 }

@@ -36,6 +36,8 @@
 			"@/hooks/*": ["./src/app/_hooks/*"],
 			"@/contexts/*": ["./src/app/_contexts/*"],
 			"@/utils/*": ["./src/app/_lib/utils/*"],
+			"@/actions/*": ["./src/app/_actions/*"],
+
 
 			"@/types/*": ["./src/app/shared/types/index.js"],
 			"@/constants/*": ["./src/app/shared/constants/index.js"],
