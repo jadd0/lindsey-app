@@ -1,1 +1,1 @@
-export * from "./image.constants.js"
+export * from "./image.constants"

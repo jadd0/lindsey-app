@@ -10,24 +10,25 @@ export default function CreateItem() {
 	const [description, setDescription] = useState('');
 	const [price, setPrice] = useState(0.0);
 	const [link, setLink] = useState('');
+	const [filesLocal, setFilesLocal] = useState<File[]>([]);
 
-	async function handleCreateItem() {
-		try {
-			const item = {
-				title,
-				description,
-				category,
-				price,
-				link,
-				imageUrls,
-			};
+	// async function handleCreateItem() {
+	// 	try {
+	// 		const item = {
+	// 			title,
+	// 			description,
+	// 			category,
+	// 			price,
+	// 			link,
+	// 			imageUrls,
+	// 		};
 
-			const response = await itemsServices.addItem(item);
-			console.log('Item created successfully:', response);
-		} catch (error) {
-			console.error('Error creating item:', error);
-		}
-	}
+	// 		const response = await itemsServices.addItem(item);
+	// 		console.log('Item created successfully:', response);
+	// 	} catch (error) {
+	// 		console.error('Error creating item:', error);
+	// 	}
+	// }
 
 	return (
 		<div className="flex flex-col items-center justify-center">
@@ -35,6 +36,13 @@ export default function CreateItem() {
 			<ItemInput type="description" setValue={setDescription} />
 			<ItemInput type="price" setValue={setPrice} />
 			<ItemInput type="link" setValue={setLink} />
+
+			<MultipleImageUploader
+				onFilesChange={(files) => {
+					setFilesLocal(files);
+				}}
+				files={filesLocal}
+			/>
 		</div>
 	);
 }
