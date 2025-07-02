@@ -26,15 +26,16 @@ export default function CreateItem() {
 			// Upload images and convert to URLs
 			const imageUrls = await uploadMultipleImages(filesLocal);
 
-			const formData = new FormData();
-			formData.append('title', title);
-			formData.append('description', description);
-			formData.append('price', price.toString());
-			formData.append('link', link);
-			formData.append('category', category);
-			formData.append('imageUrls', JSON.stringify(imageUrls));
+			const item = {
+				title,
+				description,
+				price: parseFloat(price.toString()),
+				link,
+				category,
+				imageUrls,
+			};
 
-			const result = await createItemAction(formData);
+			const result = await createItemAction(item);
 
 			if (result.success) {
 				// Handle success
