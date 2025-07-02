@@ -3,7 +3,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 // Function to upload multiple images to firebase
 export const uploadMultipleImages = async (
-	files: FileList
+	files: File[]
 ): Promise<string[]> => {
 	const downloadURLs: string[] = [];
 
