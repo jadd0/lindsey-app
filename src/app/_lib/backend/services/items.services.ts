@@ -3,8 +3,7 @@ import 'server-only';
 import { Item, ItemUpdate } from '../../../shared/types';
 import { itemsRepository } from '../repositories/items.repo';
 import { capitaliseFirstLetter } from '@/app/_lib/utils/usefulFunctions';
-
-// todo: capitalise first letter of words
+import { cache } from 'react';
 
 function capitaliseFields(item: ItemUpdate) {
 	if (item.category) {
@@ -34,11 +33,9 @@ export const getItem = async (id: string) => {
 	return result;
 };
 
-export const getAllItems = async () => {
-	const result = itemsRepository.getAllItems();
-
-	return result;
-};
+export const getAllItems = cache(async (): Promise<Item[]> => {
+	return await getAllItems();
+});
 
 export const getItemsByCategory = async (category: string) => {
 	const result = itemsRepository.getItemsByCategory(
@@ -62,6 +59,10 @@ export const deleteItemById = async (id: string) => {
 	return result;
 };
 
+export const getAllCategories = cache(async (): Promise<string[]> => {
+	return await getAllCategories();
+});
+
 export const itemsServices = {
 	addItem,
 	getItem,
@@ -69,4 +70,5 @@ export const itemsServices = {
 	getItemsByCategory,
 	updateItemById,
 	deleteItemById,
+	getAllCategories,
 };

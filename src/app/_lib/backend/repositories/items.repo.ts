@@ -132,6 +132,19 @@ export const deleteItemById = async (id: string) => {
 	return true;
 };
 
+// Get all of the categorgies available from each item
+export const getAllCategories = async () => {
+	const items = await getAllItems();
+	const categories = new Set();
+
+	items.forEach((item) => {
+		if (item.category) {
+			categories.add(item.category);
+		}
+	});
+	return Array.from(categories);
+};
+
 export const itemsRepository = {
 	addItem,
 	getItem,
@@ -139,4 +152,5 @@ export const itemsRepository = {
 	getItemsByCategory,
 	updateItemById,
 	deleteItemById,
+	getAllCategories,
 };
