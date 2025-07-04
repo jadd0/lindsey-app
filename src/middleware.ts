@@ -1,6 +1,5 @@
-// middleware.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { adminAuth } from '@/lib/firebase/admin';
+import admin from '@/lib/firebase/admin';
 
 export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
@@ -18,7 +17,7 @@ export async function middleware(request: NextRequest) {
 
 	try {
 		// Verify using Firebase Admin SDK
-		const decodedToken = await adminAuth.verifyIdToken(token);
+		const decodedToken = await admin.auth().verifyIdToken(token);
 
 		const response = NextResponse.next();
 		response.headers.set('x-admin-route', 'true');

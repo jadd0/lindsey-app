@@ -3,9 +3,7 @@
 import { useState } from 'react';
 import { MultipleImageUploader } from '@/components/image/upload/MultipleImageUploader';
 import ItemInput from './ItemInput';
-import { createItemAction } from '@/actions/items.actions';
 import { toast } from 'sonner';
-import { uploadMultipleImages } from '@/app/_lib/firebase/image';
 import { useCreateItem } from '@/app/_hooks/items.hooks';
 import CategorySelect from './CategorySelect';
 
@@ -14,7 +12,7 @@ export default function CreateItem() {
 	const [description, setDescription] = useState('');
 	const [price, setPrice] = useState(0.0);
 	const [link, setLink] = useState('');
-	const [category, setCategory] = useState(''); // Add category state
+	const [category, setCategory] = useState('');
 	const [filesLocal, setFilesLocal] = useState<File[]>([]);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -27,19 +25,15 @@ export default function CreateItem() {
 		setIsSubmitting(true);
 
 		try {
-			// Upload images and convert to URLs
-			const imageUrls = await uploadMultipleImages(filesLocal);
-
 			const item = {
 				title,
 				description,
 				price: parseFloat(price.toString()),
 				link,
 				category,
-				imageUrls,
 			};
 
-			const { success, error } = await createItem.mutateAsync(item);
+			const { success, error } = await createItem.mutateAsync({item, images: filesLocal});
 
 			toast.message('Creating item...');
 
