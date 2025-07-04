@@ -34,17 +34,15 @@ export default function CreateItem() {
 				category,
 			};
 
-			const validatedItem = itemValidationSchema.safeParse(item);
+			const validatedItemReturn = itemValidationSchema.safeParse(item);
 
-			if (!validatedItem.success) {
-				toast.error("Please ensure all fields are filled out correctly.");
+			if (!validatedItemReturn.success) {
+				toast.error('Please ensure all fields are filled out correctly.');
 				return;
 			}
 
-			console.log({validatedItem})
-
 			const { success, error } = await createItem.mutateAsync({
-				validatedItem,
+				item,
 				images: filesLocal,
 			});
 
