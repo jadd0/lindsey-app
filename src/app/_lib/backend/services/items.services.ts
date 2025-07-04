@@ -60,7 +60,7 @@ export const deleteItemById = async (id: string) => {
 };
 
 export const getAllCategories = cache(async (): Promise<string[]> => {
-	return await getAllCategories();
+	return (await itemsRepository.getAllCategories()) as string[];
 });
 
 export const itemsServices = {

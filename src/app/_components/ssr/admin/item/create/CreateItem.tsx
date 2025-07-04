@@ -6,6 +6,8 @@ import ItemInput from './ItemInput';
 import { createItemAction } from '@/actions/items.actions';
 import { toast } from 'sonner';
 import { uploadMultipleImages } from '@/app/_lib/firebase/image';
+import { useCreateItem } from '@/app/_hooks/items.hooks';
+import CategorySelect from './CategorySelect';
 
 export default function CreateItem() {
 	const [title, setTitle] = useState('');
@@ -15,6 +17,8 @@ export default function CreateItem() {
 	const [category, setCategory] = useState(''); // Add category state
 	const [filesLocal, setFilesLocal] = useState<File[]>([]);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	const createItem = useCreateItem();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -35,11 +39,11 @@ export default function CreateItem() {
 				imageUrls,
 			};
 
-			const result = await createItemAction(item);
+			const { success, error } = await createItem.mutateAsync(item);
 
-			if (result.success) {
-				// Handle success
-				console.log('Item created successfully:', result.data);
+			toast.message('Creating item...');
+
+			if (success) {
 				toast.success('Item created successfully!');
 				// Reset form
 				setTitle('');
@@ -49,15 +53,10 @@ export default function CreateItem() {
 				setCategory('');
 				setFilesLocal([]);
 			} else {
-				// Handle error
-				console.error('Error creating item:', result.error);
 				toast.error('Failed to create item. Please try again');
 			}
 		} catch (error) {
-			console.error('Submission error:', error);
 			toast.error('Failed to create item. Please try again.');
-		} finally {
-			setIsSubmitting(false);
 		}
 	};
 
@@ -70,8 +69,7 @@ export default function CreateItem() {
 			<ItemInput type="description" setValue={setDescription} />
 			<ItemInput type="price" setValue={setPrice} />
 			<ItemInput type="link" setValue={setLink} />
-			<ItemInput type="category" setValue={setCategory} />{' '}
-			{/* Add category input */}
+			<CategorySelect setValue={setCategory} />
 			<MultipleImageUploader
 				onFilesChange={(files) => {
 					setFilesLocal(files);
@@ -80,10 +78,10 @@ export default function CreateItem() {
 			/>
 			<button
 				type="submit"
-				disabled={isSubmitting}
+				disabled={createItem.isPending}
 				className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
 			>
-				{isSubmitting ? 'Creating...' : 'Create Item'}
+				{createItem.isPending ? 'Creating...' : 'Create Item'}
 			</button>
 		</form>
 	);
