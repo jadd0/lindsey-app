@@ -6,6 +6,7 @@ import ItemInput from './ItemInput';
 import { toast } from 'sonner';
 import { useCreateItem } from '@/app/_hooks/items.hooks';
 import CategorySelect from './CategorySelect';
+import { itemValidationSchema } from '@/app/shared/validation';
 
 export default function CreateItem() {
 	const [title, setTitle] = useState('');
@@ -33,19 +34,25 @@ export default function CreateItem() {
 				category,
 			};
 
-			const { success, error } = await createItem.mutateAsync({item, images: filesLocal});
+			const validatedItem = itemValidationSchema.safeParse(item);
+
+			if (!validatedItem.success) {
+				toast.error("Please ensure all fields are filled out correctly.");
+				return;
+			}
+
+			console.log({validatedItem})
+
+			const { success, error } = await createItem.mutateAsync({
+				validatedItem,
+				images: filesLocal,
+			});
 
 			toast.message('Creating item...');
 
 			if (success) {
 				toast.success('Item created successfully!');
-				// Reset form
-				setTitle('');
-				setDescription('');
-				setPrice(0.0);
-				setLink('');
-				setCategory('');
-				setFilesLocal([]);
+				document.location.reload();
 			} else {
 				toast.error('Failed to create item. Please try again');
 			}

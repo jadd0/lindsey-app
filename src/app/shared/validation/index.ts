@@ -1,1 +1,2 @@
-export * from "./image.validation.js"
+export * from "./image.validation"
+export * from "./item.validation"
