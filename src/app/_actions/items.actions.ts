@@ -3,9 +3,9 @@
 import { itemsServices } from '@/services/items.services';
 import { Item } from '../shared/types';
 
-export async function createItemAction(item: Item) {
+export async function createItemAction(item: Item, images: File[]) {
 	try {
-		const result = await itemsServices.addItem(item);
+		const result = await itemsServices.addItem(item, images);
 		return { success: true, data: result };
 	} catch (error) {
 		return { success: false, error: (error as Error).message };

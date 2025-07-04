@@ -16,8 +16,8 @@ export const useGetCategories = () => {
 
 export const useCreateItem = () => {
 	return useMutation({
-		mutationFn: async (item: Item) => {
-			return await createItemAction(item);
+		mutationFn: async ({ item, images }: { item: Item; images: File[] }) => {
+			return await createItemAction(item, images);
 		},
 	});
 };
