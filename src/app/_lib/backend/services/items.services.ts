@@ -4,6 +4,8 @@ import { Item, ItemUpdate } from '../../../shared/types';
 import { itemsRepository } from '../repositories/items.repo';
 import { capitaliseFirstLetter } from '@/app/_lib/utils/usefulFunctions';
 import { cache } from 'react';
+import { imageServices } from './image.services';
+import { UploadedFileData } from 'uploadthing/types';
 
 function capitaliseFields(item: ItemUpdate) {
 	if (item.category) {
@@ -19,10 +21,24 @@ function capitaliseFields(item: ItemUpdate) {
 	return item;
 }
 
-export const addItem = async (item: Item): Promise<boolean> => {
+function extractImageUrls(
+	images: (UploadedFileData | null | undefined)[] | null | undefined
+): string[] {
+	if (!images) {
+		return [];
+	}
+	return images
+		.filter((img): img is UploadedFileData => !!img)
+		.map((image) => image.ufsUrl);
+}
+
+export const addItem = async (item: Item, images: File[]): Promise<boolean> => {
 	item = capitaliseFields(item) as Item;
 
-	const result = itemsRepository.addItem(item);
+	const uploads = await imageServices.uploadPostImages(images);
+	const imageUrls = extractImageUrls(uploads.successes);
+
+	const result = itemsRepository.addItem({ ...item, imageUrls });
 
 	return result;
 };

@@ -5,7 +5,7 @@ export interface Item {
   category: string; // TODO: replace with enum of item types ie: bag, scarf
   price: number;
   link: string;
-  imageUrls: string[];
+  imageUrls?: string[];
   createdAt?: Date;
 }
 
