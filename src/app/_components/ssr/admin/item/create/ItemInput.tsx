@@ -13,6 +13,7 @@ export default function ItemInput({ type, setValue }: ItemInputProps) {
 			<Label>{capitaliseFirstLetter(type)}</Label>
 			<Input
 				type={type === 'price' ? 'number' : 'text'}
+				step=".01"
 				id={type}
 				placeholder={capitaliseFirstLetter(type)}
 				onChange={(e) => setValue(e.target.value)}
