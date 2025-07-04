@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { uploadImagesAction } from '../_actions/image.actions';
-import { Item } from '../shared/types';
+import { Item } from '@/types';
 
 export const useUploadImages = () => {
 	return useMutation({

@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { FileUploader, FileInput } from '@/components/ui/file-upload';
 import { ImagePlus, Trash2, X } from 'lucide-react';
-import { IMAGE_UPLOAD_CONFIG } from '@/app/shared/constants';
+import { IMAGE_UPLOAD_CONFIG } from '@/app/_shared/constants';
 import { Button } from '@/components/ui/button';
 import imageCompression from 'browser-image-compression';
 

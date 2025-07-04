@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { Item, ItemUpdate } from '../../../shared/types';
+import { Item, ItemUpdate } from '@/types';
 import { itemsRepository } from '../repositories/items.repo';
 import { capitaliseFirstLetter } from '@/app/_lib/utils/usefulFunctions';
 import { cache } from 'react';

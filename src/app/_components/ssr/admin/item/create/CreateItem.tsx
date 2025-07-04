@@ -6,7 +6,7 @@ import ItemInput from './ItemInput';
 import { toast } from 'sonner';
 import { useCreateItem } from '@/app/_hooks/items.hooks';
 import CategorySelect from './CategorySelect';
-import { itemValidationSchema } from '@/app/shared/validation';
+import { itemValidationSchema } from '@/app/_shared/validation';
 
 export default function CreateItem() {
 	const [title, setTitle] = useState('');

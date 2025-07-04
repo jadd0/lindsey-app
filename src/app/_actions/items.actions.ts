@@ -1,7 +1,7 @@
 'use server';
 
 import { itemsServices } from '@/services/items.services';
-import { Item } from '../shared/types';
+import { Item } from '@/types';
 
 export async function createItemAction(item: Item, images: File[]) {
 	try {

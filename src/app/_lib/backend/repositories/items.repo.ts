@@ -8,7 +8,7 @@ import {
 	UpdateData,
 	deleteDoc,
 } from 'firebase/firestore';
-import { Item, ItemUpdate } from '../../../shared/types';
+import { Item, ItemUpdate } from '@/types';
 import { db } from '../../firebase/firebase';
 
 // Inserts data with an auto-generated ID into the "items" collection

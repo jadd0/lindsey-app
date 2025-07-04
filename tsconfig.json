@@ -38,10 +38,9 @@
 			"@/utils/*": ["./src/app/_lib/utils/*"],
 			"@/actions/*": ["./src/app/_actions/*"],
 
-
-			"@/types": ["./src/app/shared/types/index.js"],
-			"@/constants": ["./src/app/shared/constants/index.js"],
-			"@/validation": ["./src/app/shared/validation/index.js"],
+			"@/types": ["./src/app/_shared/types/index.js"],
+			"@/constants": ["./src/app/_shared/constants/index.js"],
+			"@/validation": ["./src/app/_shared/validation/index.js"],
 
 			"@/env": ["./src/env.js"]
 		}

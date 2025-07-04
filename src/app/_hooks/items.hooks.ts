@@ -3,7 +3,7 @@ import {
 	createItemAction,
 	getCategoriesAction,
 } from '../_actions/items.actions';
-import { Item } from '../shared/types';
+import { Item } from '@/types';
 
 export const useGetCategories = () => {
 	return useQuery({
