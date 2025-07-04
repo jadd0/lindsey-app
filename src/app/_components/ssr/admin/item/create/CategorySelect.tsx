@@ -1,5 +1,6 @@
 'use client';
 
+import { Input } from '@/app/_components/ui/input';
 import { useGetCategories } from '@/app/_hooks/items.hooks';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,7 +12,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function CategorySelect({
 	setValue,
@@ -19,12 +20,30 @@ export default function CategorySelect({
 	setValue: (value: string) => void;
 }) {
 	const [category, setCategory] = useState('');
+	const [newCategory, setNewCategory] = useState('');
+	const [localCategories, setLocalCategories] = useState<string[]>([]);
+
 	const { data: categories, isLoading, error } = useGetCategories();
+
+	useEffect(() => {
+		if (categories?.success) {
+			setLocalCategories(categories.data!);
+		} else if (categories?.error) {
+			console.error('Error loading categories:', categories.error);
+		}
+	}, [categories]);
 
 	// Handler to update both local state and parent
 	const handleCategoryChange = (value: string) => {
 		setCategory(value);
 		setValue(value);
+	};
+
+	const handleKeyDown = (e) => {
+		if (e.key === 'Enter' && newCategory.trim() !== '') {
+			localCategories.push(newCategory.trim());
+			setNewCategory('');
+		}
 	};
 
 	return (
@@ -37,6 +56,11 @@ export default function CategorySelect({
 			<DropdownMenuContent className="w-56">
 				<DropdownMenuLabel>Category</DropdownMenuLabel>
 				<DropdownMenuSeparator />
+				<Input
+					value={newCategory}
+					onChange={(e) => setNewCategory(e.target.value)}
+					onKeyDown={handleKeyDown}
+				/>
 				<DropdownMenuRadioGroup
 					value={category}
 					onValueChange={handleCategoryChange}
@@ -52,12 +76,11 @@ export default function CategorySelect({
 						</DropdownMenuRadioItem>
 					)}
 					{/* Render categories if available */}
-					{categories?.success &&
-						categories.data!.map((cat) => (
-							<DropdownMenuRadioItem key={cat} value={cat}>
-								{cat}
-							</DropdownMenuRadioItem>
-						))}
+					{localCategories.map((cat) => (
+						<DropdownMenuRadioItem key={cat} value={cat}>
+							{cat}
+						</DropdownMenuRadioItem>
+					))}
 				</DropdownMenuRadioGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
