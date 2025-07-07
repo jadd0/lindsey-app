@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 import {
 	createItemAction,
+	getAllItemsAction,
 	getCategoriesAction,
 	getPaginatedItems,
 } from '../_actions/items.actions';
@@ -15,6 +16,15 @@ export const useGetCategories = () => {
 	});
 };
 
+export const useGetAllItems = () => {
+	return useQuery({
+		queryKey: ['items', 'all'],
+		queryFn: async () => {
+			return getAllItemsAction();
+		},
+	});
+};
+
 export const useCreateItem = () => {
 	return useMutation({
 		mutationFn: async ({ item, images }: { item: Item; images: File[] }) => {
@@ -23,7 +33,7 @@ export const useCreateItem = () => {
 	});
 };
 
-export const useGetAllItems = () => {
+export const useGetAllItemsPaginated = () => {
 	return useInfiniteQuery({
 		queryKey: ['items', 'allItems'],
 		queryFn: ({ pageParam = null }: { pageParam?: string | null }) =>
