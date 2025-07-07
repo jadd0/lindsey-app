@@ -20,3 +20,8 @@ export async function getCategoriesAction() {
 		return { success: false, error: (error as Error).message };
 	}
 }
+
+export async function getPaginatedItems(cursor: string | null) {
+	const result = await itemsServices.getPaginatedItems(cursor);
+	return { data: result.items, nextCursor: result.nextCursor };
+}

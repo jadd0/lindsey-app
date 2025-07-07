@@ -7,6 +7,10 @@ import {
 	updateDoc,
 	UpdateData,
 	deleteDoc,
+	query,
+	orderBy,
+	startAfter,
+	limit as limitFn,
 } from 'firebase/firestore';
 import { Item, ItemUpdate } from '@/types';
 import { db } from '../../firebase/firebase';
@@ -45,6 +49,50 @@ export const getItem = async (id: string): Promise<Item | null> => {
 	} catch (error) {
 		throw new Error(
 			`Error retrieving item: ${
+				error instanceof Error ? error.message : 'Unknown error'
+			}`
+		);
+	}
+};
+
+// Get all items from the "items" collection in pages
+export const getPaginatedItems = async (
+	cursor: string | null = null,
+	limit: number = 6
+): Promise<{ items: Item[]; nextCursor: string | null }> => {
+	try {
+		const itemsCollection = collection(db, 'items');
+		let q;
+
+		if (cursor) {
+			// Use orderBy and startAfter for pagination
+			q = query(
+				itemsCollection,
+				orderBy('id'),
+				startAfter(cursor),
+				limitFn(limit)
+			);
+		} else {
+			q = query(itemsCollection, orderBy('id'), limitFn(limit));
+		}
+
+		const itemsSnapshot = await getDocs(q);
+		const itemsList: Item[] = [];
+
+		itemsSnapshot.forEach((doc) => {
+			const data = doc.data() as Item;
+			itemsList.push({ ...data, id: doc.id });
+		});
+
+		// Set the next cursor to the last item's id, or null if no more items
+		const nextCursor = (
+			itemsList.length === limit ? itemsList[itemsList.length - 1].id : null
+		) as string | null;
+
+		return { items: itemsList, nextCursor };
+	} catch (error) {
+		throw new Error(
+			`Error retrieving paginated items: ${
 				error instanceof Error ? error.message : 'Unknown error'
 			}`
 		);
@@ -153,4 +201,5 @@ export const itemsRepository = {
 	updateItemById,
 	deleteItemById,
 	getAllCategories,
+	getPaginatedItems
 };

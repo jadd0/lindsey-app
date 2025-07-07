@@ -50,7 +50,11 @@ export const getItem = async (id: string) => {
 };
 
 export const getAllItems = cache(async (): Promise<Item[]> => {
-	return await getAllItems();
+	return await itemsRepository.getAllItems();
+});
+
+export const getPaginatedItems = cache(async (cursor: any) => {
+	return await itemsRepository.getPaginatedItems(cursor);
 });
 
 export const getItemsByCategory = async (category: string) => {
@@ -87,4 +91,5 @@ export const itemsServices = {
 	updateItemById,
 	deleteItemById,
 	getAllCategories,
+	getPaginatedItems
 };
