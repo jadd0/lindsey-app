@@ -3,6 +3,7 @@ import './globals.css';
 import { ReactQueryClientProvider } from '@/components/ReactQueryClientProvider';
 import { AuthProvider } from '@/contexts/auth';
 import { Toaster } from 'sonner';
+import Navbar from './_components/layout/Navbar';
 
 export const metadata: Metadata = {
 	title: 'Your App',
@@ -16,10 +17,13 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body>
+			<body className="bg-[#40e0D0]">
 				<ReactQueryClientProvider>
 					<Toaster position="top-right" closeButton={false} />
-					<AuthProvider>{children}</AuthProvider>
+					<AuthProvider>
+						<Navbar />
+						{children}
+					</AuthProvider>
 				</ReactQueryClientProvider>
 			</body>
 		</html>
