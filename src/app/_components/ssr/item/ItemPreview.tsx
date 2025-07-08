@@ -6,10 +6,11 @@ import {
 	CarouselNext,
 	CarouselPrevious,
 } from '@/components/ui/carousel';
+import Link from 'next/link';
 
 export default function ItemPreview({ item }: { item: Item }) {
 	return (
-		<div className="flex flex-col items-center">
+		<div className="flex flex-col">
 			<Carousel>
 				<CarouselContent>
 					{item.imageUrls!.map((imageUrl, index) => (
@@ -28,10 +29,13 @@ export default function ItemPreview({ item }: { item: Item }) {
 				<CarouselPrevious />
 				<CarouselNext />
 			</Carousel>
-			<div className="p-4">
-				<h2 className="text-lg font-bold">{item.title}</h2>
-				<p className="text-xl font-semibold mt-2">£{item.price.toFixed(2)}</p>
-			</div>
+			<Link href={`${item.link}`} className="w-full h-full">
+				<div className="flex flex-col gap-0 mt-3">
+					<h2 className="text-xl font-bold">{item.title}</h2>
+					<p className="text-lg">£{item.price.toFixed(2)}</p>
+					<p className="text-md">{item.description}</p>
+				</div>
+			</Link>
 		</div>
 	);
 }

@@ -17,7 +17,8 @@ export default function ItemsPage() {
 			{isLoading && <div className="text-center mb-4">Loading items...</div>}
 
 			{!isLoading && items.length > 0 && (
-				<div className="w-full grid grid-cols-2 sm:grid-cols-4 justify-around gap-5 p-10">
+				<div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-around gap-5 p-10">
+					{' '}
 					{items.map((item) => (
 						<div className="" key={item.id}>
 							<ItemPreview item={item} />
