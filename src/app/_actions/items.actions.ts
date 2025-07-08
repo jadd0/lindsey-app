@@ -3,6 +3,30 @@
 import { itemsServices } from '@/services/items.services';
 import { Item } from '@/types';
 
+// Helper: Converts Firestore Timestamp to JS Date
+function serialiseItem(item: Item) {
+	let createdAt: Date | null = null;
+
+	if (item.createdAt) {
+		if (item.createdAt instanceof Date) {
+			createdAt = item.createdAt;
+		} else if (
+			typeof item.createdAt.seconds === 'number' &&
+			typeof item.createdAt.nanoseconds === 'number'
+		) {
+			createdAt = new Date(
+				item.createdAt.seconds * 1000 +
+					Math.floor(item.createdAt.nanoseconds / 1e6)
+			);
+		}
+	}
+
+	return {
+		...item,
+		createdAt,
+	};
+}
+
 export async function createItemAction(item: Item, images: File[]) {
 	try {
 		const result = await itemsServices.addItem(item, images);
@@ -24,7 +48,10 @@ export async function getCategoriesAction() {
 export async function getAllItemsAction() {
 	try {
 		const result = await itemsServices.getAllItems();
-		return { success: true, data: result };
+		// Serialise all items to ensure createdAt is a Date
+		const serialised = result.map(serialiseItem);
+		console.log(serialised);
+		return { success: true, data: serialised };
 	} catch (error) {
 		return { success: false, error: (error as Error).message };
 	}
