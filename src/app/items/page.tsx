@@ -12,14 +12,14 @@ export default function ItemsPage() {
 	console.log(items);
 
 	return (
-		<div className="flex flex-col items-center w-full h-full mt-5 border-2 border-red-800">
+		<div className="flex flex-col items-center w-full h-full mt-5 overflow-x-hidden">
 			<h1 className="text-3xl font-bold mb-4">Shop</h1>
 			{isLoading && <div className="text-center mb-4">Loading items...</div>}
 
 			{!isLoading && items.length > 0 && (
-				<div className="w-full grid grid-cols-2 items-center">
+				<div className="w-full grid grid-cols-2 sm:grid-cols-4 justify-around gap-5 p-10">
 					{items.map((item) => (
-						<div className="w-40" key={item.id}>
+						<div className="" key={item.id}>
 							<ItemPreview item={item} />
 						</div>
 					))}

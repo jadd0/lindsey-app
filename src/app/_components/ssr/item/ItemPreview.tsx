@@ -9,13 +9,13 @@ import {
 
 export default function ItemPreview({ item }: { item: Item }) {
 	return (
-		<div className="flex flex-col items-center border border-white-800 w-40">
+		<div className="flex flex-col items-center">
 			<Carousel>
 				<CarouselContent>
 					{item.imageUrls!.map((imageUrl, index) => (
 						<CarouselItem
 							key={index}
-							className="w-64 h-64 flex items-center justify-center"
+							className="h-60 flex items-center justify-center"
 						>
 							<img
 								src={imageUrl}
