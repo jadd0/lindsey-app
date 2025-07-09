@@ -30,7 +30,7 @@ export default function CategoryFilter({
 		<>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<Button variant="outline">
+					<Button variant="outline" className='text-black'>
 						{category === '' ? 'Choose Category' : category}
 					</Button>
 				</DropdownMenuTrigger>

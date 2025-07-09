@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className="bg-[#40e0D0]">
+			<body className="bg-[#1e60e1] text-white">
 				<ReactQueryClientProvider>
 					<Toaster position="top-right" closeButton={false} />
 					<AuthProvider>
