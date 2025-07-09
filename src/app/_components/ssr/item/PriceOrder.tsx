@@ -26,7 +26,7 @@ export default function PriceOrder({
 		<>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<Button variant="outline" className='text-black'>
+					<Button variant="outline" className='text-black w-60'>
 						Price Ordering: {priceOrder}
 					</Button>
 				</DropdownMenuTrigger>

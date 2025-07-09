@@ -47,7 +47,7 @@ export default function ItemsPage() {
 			/>
 			{isLoading && (
 				<div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-around gap-5 p-10">
-					{Array.from({ length: 10 }).map((_, index) => (
+					{Array.from({ length: 8 }).map((_, index) => (
 						<ItemPreviewSkeleton key={index} />
 					))}
 				</div>

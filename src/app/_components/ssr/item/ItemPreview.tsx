@@ -21,7 +21,7 @@ export default function ItemPreview({ item }: { item: Item }) {
 							<img
 								src={imageUrl}
 								alt={`Item image ${index + 1}`}
-								className="object-cover w-full h-full"
+								className="object-cover w-full h-full rounded"
 							/>
 						</CarouselItem>
 					))}
@@ -33,7 +33,7 @@ export default function ItemPreview({ item }: { item: Item }) {
 				<div className="flex flex-col gap-0 mt-3">
 					<h2 className="text-xl font-bold">{item.title}</h2>
 					<p className="text-lg">£{item.price.toFixed(2)}</p>
-					<p className="text-md">{item.description}</p>
+					<p className="text- font-light">{item.description}</p>
 				</div>
 			</Link>
 		</div>

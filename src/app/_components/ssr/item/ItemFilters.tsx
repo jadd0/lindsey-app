@@ -1,4 +1,4 @@
-import ItemFilter from './ItemFilter';
+import CategoryFilter from './CategoryFilter';
 import PriceOrder from './PriceOrder';
 import ItemSearch from './ItemSearch';
 
@@ -14,7 +14,7 @@ export default function ItemFilters({
 	return (
 		<div className="w-full h-15 grid grid-cols-2">
 			<div className="flex items-center justify-center gap-5">
-				<ItemFilter categoryChange={(category) => categoryChange(category)} />
+				<CategoryFilter categoryChange={(category) => categoryChange(category)} />
 				<PriceOrder
 					priceOrderChange={(priceOrder) => priceOrderChange(priceOrder)}
 				/>
