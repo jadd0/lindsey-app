@@ -12,13 +12,12 @@ export default function ItemFilters({
 	searchChange: (search: string) => void;
 }) {
 	return (
-		<div className="w-full h-15 grid grid-cols-2">
-			<div className="flex items-center justify-center gap-5">
-				<CategoryFilter categoryChange={(category) => categoryChange(category)} />
-				<PriceOrder
-					priceOrderChange={(priceOrder) => priceOrderChange(priceOrder)}
-				/>
-			</div>
+		<div className="w-full flex flex-col md:flex-row items-center justify-center gap-2 md:gap-5">
+			<CategoryFilter categoryChange={(category) => categoryChange(category)} />
+			<PriceOrder
+				priceOrderChange={(priceOrder) => priceOrderChange(priceOrder)}
+			/>
+
 			<ItemSearch searchChange={(search) => searchChange(search)} />
 		</div>
 	);
