@@ -18,8 +18,6 @@ export default function ItemsPage() {
 	const filteredItems = useMemo(() => {
 		if (!items) return [];
 
-		console.log(search)
-
 		// Filter items based on category and search term
 		const filteredItems = items
 			.filter((item) => {
