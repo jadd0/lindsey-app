@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { Fade } from 'react-awesome-reveal';
 
 export default function HomePage() {
 	return (
@@ -31,28 +32,34 @@ export default function HomePage() {
 					</p>
 				</div>
 				{/* Image */}
-				<div className="flex items-center justify-center">
-					<Image
-						src="/mum.jpg"
-						alt="Lindsey Shop Owner"
-						width={300}
-						height={300}
-						className="rounded-full"
-					/>
-				</div>
+				<Fade triggerOnce>
+					<div className="flex items-center justify-center">
+						<Image
+							src="/mum.jpg"
+							alt="Lindsey Shop Owner"
+							width={300}
+							height={300}
+							className="rounded-full"
+						/>
+					</div>
+				</Fade>
 			</div>
+
 			{/* Our story */}
 			<div className="grid grid-cols-2 w-full space-between mt-30">
 				{/* Image */}
-				<div className="flex items-center justify-center">
-					<Image
-						src="/hangingTree.png"
-						alt="Bouganvillea Tree with Hanging Decoration"
-						width={500}
-						height={500}
-						className="rounded-full"
-					/>
-				</div>
+				<Fade triggerOnce>
+					<div className="flex items-center justify-center">
+						<Image
+							src="/hangingTree.png"
+							alt="Bouganvillea Tree with Hanging Decoration"
+							width={500}
+							height={500}
+							className="rounded-full"
+						/>
+					</div>
+				</Fade>
+
 				{/* Text */}
 				<div className="flex flex-col justify-center pt-15">
 					<h2 className="text-4xl font-bold">All About The Story:</h2>
@@ -67,6 +74,7 @@ export default function HomePage() {
 					</p>
 				</div>
 			</div>
+
 			{/* Featured content */}
 		</div>
 	);
