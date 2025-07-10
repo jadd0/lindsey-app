@@ -7,21 +7,24 @@ import {
 	CarouselPrevious,
 } from '@/components/ui/carousel';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ItemPreview({ item }: { item: Item }) {
 	return (
 		<div className="flex flex-col">
 			<Carousel>
 				<CarouselContent>
-					{item.imageUrls!.map((imageUrl, index) => (
+					{item.imageUrls!.map((imageUrl) => (
 						<CarouselItem
-							key={index}
-							className="h-60 flex items-center justify-center"
+							key={imageUrl}
+							className="h-60 flex items-center justify-center relative"
 						>
-							<img
+							<Image
 								src={imageUrl}
-								alt={`Item image ${index + 1}`}
+								alt="Item image"
+								fill
 								className="object-cover w-full h-full rounded"
+								sizes="(max-width: 768px) 100vw, 600px"
 							/>
 						</CarouselItem>
 					))}
