@@ -1,0 +1,9 @@
+TODO LIST:
+- Admin to delete/edit blogs
+  - Backend to support this
+
+- Admin to "favourite" 3 items
+  - Backend to support this
+  - Hook to retrieve these
+  
+- Landing and home page in general

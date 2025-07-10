@@ -3,6 +3,7 @@ import './globals.css';
 import { ReactQueryClientProvider } from '@/components/ReactQueryClientProvider';
 import { AuthProvider } from '@/contexts/auth';
 import { Toaster } from 'sonner';
+import { ReactLenis, useLenis } from 'lenis/react'
 import Navbar from './_components/layout/Navbar';
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function RootLayout({
 				<ReactQueryClientProvider>
 					<Toaster position="top-right" closeButton={false} />
 					<AuthProvider>
+						<ReactLenis root />
 						<Navbar />
 						{children}
 					</AuthProvider>
