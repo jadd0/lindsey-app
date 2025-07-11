@@ -193,6 +193,42 @@ export const getAllCategories = async () => {
 	return Array.from(categories);
 };
 
+export const getFavouriteItems = async (): Promise<Item[]> => {
+	const items = await getAllItems();
+	return items.filter((item) => item.favourite);
+};
+
+export const setNewFavourites = async (
+	id1: string,
+	id2: string,
+	id3: string // new favourite id
+) => {
+	const currentFavourites = await getFavouriteItems();
+
+	currentFavourites.forEach((favouriteItem) => {
+		if (
+			!(
+				favouriteItem.id == id1 ||
+				favouriteItem.id == id2 ||
+				favouriteItem.id == id3
+			)
+		) {
+			if (
+				!updateItemById(favouriteItem.id!, {
+					favourite: false,
+				})
+			)
+				return false;
+		}
+	});
+
+	if (!updateItemById(id1, { favourite: true })) return false;
+	if (!updateItemById(id2, { favourite: true })) return false;
+	if (!updateItemById(id3, { favourite: true })) return false;
+
+	return true;
+};
+
 export const itemsRepository = {
 	addItem,
 	getItem,
@@ -201,5 +237,7 @@ export const itemsRepository = {
 	updateItemById,
 	deleteItemById,
 	getAllCategories,
-	getPaginatedItems
+	getPaginatedItems,
+	getFavouriteItems,
+	setNewFavourites,
 };

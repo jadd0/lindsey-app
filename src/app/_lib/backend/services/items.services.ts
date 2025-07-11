@@ -83,6 +83,14 @@ export const getAllCategories = cache(async (): Promise<string[]> => {
 	return (await itemsRepository.getAllCategories()) as string[];
 });
 
+export const getFavouriteItems = cache(async (): Promise<Item[]> => {
+	return (await itemsRepository.getFavouriteItems());
+});
+
+export const setNewFavourites = async (id1: string, id2: string, id3: string) {
+	return (await itemsRepository.setNewFavourites(id1, id2, id3));
+}
+
 export const itemsServices = {
 	addItem,
 	getItem,
@@ -91,5 +99,5 @@ export const itemsServices = {
 	updateItemById,
 	deleteItemById,
 	getAllCategories,
-	getPaginatedItems
+	getPaginatedItems,
 };
