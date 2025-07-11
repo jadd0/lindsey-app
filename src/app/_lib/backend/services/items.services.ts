@@ -100,4 +100,6 @@ export const itemsServices = {
 	deleteItemById,
 	getAllCategories,
 	getPaginatedItems,
+	getFavouriteItems,
+	setNewFavourites
 };

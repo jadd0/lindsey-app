@@ -61,3 +61,21 @@ export async function getPaginatedItems(cursor: string | null) {
 	const result = await itemsServices.getPaginatedItems(cursor);
 	return { data: result.items, nextCursor: result.nextCursor };
 }
+
+export async function getFavouriteItemsAction() {
+	try {
+		const result = await itemsServices.getFavouriteItems();
+		return { success: true, data: result };
+	} catch (error) {
+		return { success: false, error: (error as Error).message };
+	}
+}
+
+export async function setNewFavouritesAction(id1: string, id2: string, id3: string) {
+	try {
+		const result = await itemsServices.setNewFavourites(id1, id2, id3);
+		return { success: true, data: result };
+	} catch (error) {
+		return { success: false, error: (error as Error).message };
+	}
+}

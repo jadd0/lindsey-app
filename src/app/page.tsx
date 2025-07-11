@@ -75,7 +75,17 @@ export default function HomePage() {
 				</div>
 			</div>
 
-			{/* Featured content */}
+			{/* Featured products */}
+			<div className="flex flex-col w-full ml-30 mt-30 space-between">
+				{/* Text */}
+				<div className="flex flex-col pt-15">
+					<h2 className="text-4xl font-bold">My Favourites:</h2>
+					<p className="mt-4 max-w-200">
+						These are my current favourite items, which I have handpicked (and often wear myself 😉)
+					</p>
+				</div>
+				
+			</div>
 		</div>
 	);
 }

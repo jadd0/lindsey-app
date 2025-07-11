@@ -3,7 +3,9 @@ import {
 	createItemAction,
 	getAllItemsAction,
 	getCategoriesAction,
+	getFavouriteItemsAction,
 	getPaginatedItems,
+	setNewFavouritesAction,
 } from '../_actions/items.actions';
 import { Item } from '@/types';
 
@@ -40,5 +42,30 @@ export const useGetAllItemsPaginated = () => {
 			getPaginatedItems(pageParam),
 		initialPageParam: null,
 		getNextPageParam: (lastPage) => lastPage.nextCursor,
+	});
+};
+
+export const useGetFavouriteItems = () => {
+	return useQuery({
+		queryKey: ['items', 'favourites'],
+		queryFn: async () => {
+			return getFavouriteItemsAction();
+		},
+	});
+};
+
+export const useSetNewFavourites = () => {
+	return useMutation({
+		mutationFn: async ({
+			id1,
+			id2,
+			id3,
+		}: {
+			id1: string;
+			id2: string;
+			id3: string;
+		}) => {
+			return await setNewFavouritesAction(id1, id2, id3);
+		},
 	});
 };
