@@ -87,7 +87,7 @@ export const getFavouriteItems = cache(async (): Promise<Item[]> => {
 	return (await itemsRepository.getFavouriteItems());
 });
 
-export const setNewFavourites = async (id1: string, id2: string, id3: string) {
+export const setNewFavourites = async (id1: string, id2: string, id3: string) => {
 	return (await itemsRepository.setNewFavourites(id1, id2, id3));
 }
 
