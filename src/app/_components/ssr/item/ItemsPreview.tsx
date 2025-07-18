@@ -7,7 +7,13 @@ import ItemPreview from './ItemPreview';
 import ItemFilters from './ItemFilters';
 import ItemPreviewSkeleton from './ItemPreviewSkeleton';
 
-export default function ItemsPreviewWithFilters() {
+export default function ItemsPreviewWithFilters({
+	itemClicked,
+	clickable = false,
+}: {
+	itemClicked?: (item: Item) => void;
+	clickable?: boolean;
+}) {
 	const { data, isLoading, isError } = useGetAllItems();
 	const items = (data?.data as Item[]) || [];
 
@@ -59,7 +65,11 @@ export default function ItemsPreviewWithFilters() {
 				<div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-around gap-5 p-10">
 					{filteredItems.map((item) => (
 						<div className="" key={item.id}>
-							<ItemPreview item={item} />
+							<ItemPreview
+								item={item}
+								click={(itemClick) => itemClicked!(itemClick)}
+								clickable={clickable}
+							/>
 						</div>
 					))}
 				</div>

@@ -49,7 +49,7 @@ export const useGetFavouriteItems = () => {
 	return useQuery({
 		queryKey: ['items', 'favourites'],
 		queryFn: async () => {
-			return getFavouriteItemsAction();
+			return getFavouriteItemsAction()
 		},
 	});
 };

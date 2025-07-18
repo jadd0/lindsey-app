@@ -9,9 +9,19 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function ItemPreview({ item }: { item: Item }) {
+export default function ItemPreview({
+	item,
+	click,
+	extraClass,
+	clickable = false,
+}: {
+	item: Item;
+	click?: (item: Item) => void;
+	extraClass?: string;
+	clickable?: boolean;
+}) {
 	return (
-		<div className="flex flex-col">
+		<div className={'flex flex-col ' + extraClass} onClick={() => click!(item)}>
 			<Carousel>
 				<CarouselContent>
 					{item.imageUrls!.map((imageUrl) => (
@@ -32,13 +42,23 @@ export default function ItemPreview({ item }: { item: Item }) {
 				<CarouselPrevious />
 				<CarouselNext />
 			</Carousel>
-			<Link href={`${item.link}`} className="w-full h-full">
+			{clickable && (
 				<div className="flex flex-col gap-0 mt-3">
 					<h2 className="text-xl font-bold">{item.title}</h2>
 					<p className="text-lg">£{item.price.toFixed(2)}</p>
 					<p className="text- font-light">{item.description}</p>
 				</div>
-			</Link>
+			)}
+
+			{!clickable && (
+				<Link href={`${item.link}`} className="w-full h-full">
+					<div className="flex flex-col gap-0 mt-3">
+						<h2 className="text-xl font-bold">{item.title}</h2>
+						<p className="text-lg">£{item.price.toFixed(2)}</p>
+						<p className="text- font-light">{item.description}</p>
+					</div>
+				</Link>
+			)}
 		</div>
 	);
 }
