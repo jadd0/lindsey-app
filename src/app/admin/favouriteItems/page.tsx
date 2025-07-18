@@ -85,20 +85,21 @@ export default function FavouriteItemsPage() {
 				)}
 				{isError && <p>Error loading favourite items.</p>}
 				{!isLoading && (
-					<div className="w-screen grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center">
-						{favouriteItems.map((item: Item, index: number) => (
+					<div className="w-[70vw] p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+						{favouriteItems.map((item, index) => (
 							<div
-								className="w-1/2 aspect-square border b-2"
+								className="aspect-square border max-w-[300px] flex items-center justify-center cursor-pointer hover:scale-102 transition-transform duration-200 rounded"
 								onClick={() => handleIndexClick(index)}
+								key={index}
 							>
-								<ItemPreview key={index} item={item} clickable={true} />
+								<ItemPreview item={item} clickable={true} extraClass='w-full p-5' />
 							</div>
 						))}
 					</div>
 				)}
 
 				{popupOpen && (
-					<div className="w-screen h-screen absolute top-0 bg-[#1e60e1]">
+					<div className="fixed inset-0 z-50 bg-[#1e60e1] w-screen h-screen">
 						<ItemsPreviewWithFilters
 							itemClicked={(itemClicked) => handleNewFavoruiteItem(itemClicked)}
 							clickable={true}
