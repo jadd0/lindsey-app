@@ -1,11 +1,16 @@
 'use client';
 
 import ItemsPreviewWithFilters from '@/app/_components/ssr/item/ItemsPreview';
-import { useGetFavouriteItems } from '@/app/_hooks/items.hooks';
+import {
+	useGetFavouriteItems,
+	useSetNewFavourites,
+} from '@/app/_hooks/items.hooks';
 import ItemPreview from '@/app/_components/ssr/item/ItemPreview';
 import ItemPreviewSkeleton from '@/app/_components/ssr/item/ItemPreviewSkeleton';
 import { Item } from '@/app/_shared/types';
 import { useEffect, useState } from 'react';
+import { favouriteItemsSchema } from '@/app/_shared/validation';
+import { toast } from 'sonner';
 
 export default function FavouriteItemsPage() {
 	const {
@@ -13,6 +18,13 @@ export default function FavouriteItemsPage() {
 		isLoading,
 		isError,
 	} = useGetFavouriteItems();
+
+	const {
+		mutate: setNewFavourites,
+		isSuccess,
+		isPending,
+		isError: setNewFavouritesError,
+	} = useSetNewFavourites();
 
 	const [favouriteItems, setFavouriteItems] = useState<Item[]>([]);
 	const [popupOpen, setPopupOpen] = useState(false);
@@ -68,6 +80,29 @@ export default function FavouriteItemsPage() {
 		console.log(favouriteItems);
 	}
 
+	function handleSubmit() {
+		const validatedItems = favouriteItemsSchema.safeParse(favouriteItems);
+
+		if (!validatedItems.success) {
+			toast.error('Please select 3 valid items.');
+			return;
+		}
+
+		setNewFavourites({
+			id1: validatedItems.data[0].id,
+			id2: validatedItems.data[1].id,
+			id3: validatedItems.data[2].id,
+		});
+
+		if (isSuccess) {
+			toast.success('Favourite items updated successfully!');
+      
+			setTimeout(() => {
+				location.reload();
+			}, 500);
+		}
+	}
+
 	return (
 		<div className="flex flex-col items-center w-full h-full">
 			<h1 className="text-3xl font-bold mb-4">Favourite Items</h1>
@@ -85,14 +120,18 @@ export default function FavouriteItemsPage() {
 				)}
 				{isError && <p>Error loading favourite items.</p>}
 				{!isLoading && (
-					<div className="w-[70vw] p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+					<div className="w-[70vw] max-w-5xl mx-auto p-10 grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 						{favouriteItems.map((item, index) => (
 							<div
-								className="aspect-square border max-w-[300px] flex items-center justify-center cursor-pointer hover:scale-102 transition-transform duration-200 rounded"
+								className="aspect-square border min-w-[200px] flex items-center justify-center cursor-pointer hover:scale-102 transition-transform duration-200 rounded"
 								onClick={() => handleIndexClick(index)}
 								key={index}
 							>
-								<ItemPreview item={item} clickable={true} extraClass='w-full p-5' />
+								<ItemPreview
+									item={item}
+									clickable={true}
+									extraClass="w-full p-5"
+								/>
 							</div>
 						))}
 					</div>
@@ -107,6 +146,13 @@ export default function FavouriteItemsPage() {
 					</div>
 				)}
 			</div>
+
+			<button
+				className="w-40 h-10 bg-white text-black rounded-lg cursor-pointer hover:scale-102 transition-transform duration-200"
+				onClick={handleSubmit}
+			>
+				Submit
+			</button>
 		</div>
 	);
 }

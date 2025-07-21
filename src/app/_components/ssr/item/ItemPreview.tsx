@@ -21,7 +21,7 @@ export default function ItemPreview({
 	clickable?: boolean;
 }) {
 	return (
-		<div className={'flex flex-col ' + extraClass} onClick={() => click!(item)}>
+		<div className={'flex flex-col ' + extraClass} onClick={() => click ? click(item) : null}>
 			<Carousel>
 				<CarouselContent>
 					{item.imageUrls!.map((imageUrl) => (
