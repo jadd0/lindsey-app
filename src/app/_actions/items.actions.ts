@@ -65,7 +65,8 @@ export async function getPaginatedItems(cursor: string | null) {
 export async function getFavouriteItemsAction() {
 	try {
 		const result = await itemsServices.getFavouriteItems();
-		return { success: true, data: result };
+		const serialised = result.map(serialiseItem)
+		return { success: true, data: serialised };
 	} catch (error) {
 		return { success: false, error: (error as Error).message };
 	}
