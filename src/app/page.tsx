@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { Item } from './_shared/types';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import Footer from './_components/layout/Footer';
 
 export default function HomePage() {
 	const {
@@ -132,6 +133,7 @@ export default function HomePage() {
 					</Link>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 }
