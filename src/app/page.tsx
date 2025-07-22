@@ -1,12 +1,36 @@
+'use client';
+
 import Image from 'next/image';
 import { Fade } from 'react-awesome-reveal';
 
+import { useGetFavouriteItems } from './_hooks/items.hooks';
+import ItemPreview from './_components/ssr/item/ItemPreview';
+import ItemPreviewSkeleton from './_components/ssr/item/ItemPreviewSkeleton';
+import { useEffect, useState } from 'react';
+import { Item } from './_shared/types';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
+
 export default function HomePage() {
+	const {
+		data: favouriteItemsResponse,
+		isLoading,
+		isError,
+	} = useGetFavouriteItems();
+	const [favouriteItems, setFavouriteItems] = useState<Item[]>([]);
+	console.log(favouriteItemsResponse);
+
+	useEffect(() => {
+		if (favouriteItemsResponse?.data) {
+			setFavouriteItems(favouriteItemsResponse.data);
+		}
+	}, [favouriteItemsResponse]);
+
 	return (
 		<div className="flex flex-col w-full items-center justify-center overflow-x-hidden">
 			{/* Landing page */}
-			<div className="flex flex-col h-screen items-center justify-center w-screen mt-10">
-				<div className="relative w-1/3 h-auto aspect-[16/14]">
+			<div className="flex flex-col min-h-[60vh] items-center justify-center w-full mt-10 px-4">
+				<div className="relative w-4/5 sm:w-1/2 md:w-1/3 max-w-xs h-auto aspect-[16/14]">
 					<Image
 						src="/LindseyShopHangingSign.png"
 						alt="Lindsey Shop Logo"
@@ -17,11 +41,11 @@ export default function HomePage() {
 			</div>
 
 			{/* About me section */}
-			<div className="grid grid-cols-2 w-full ml-30 space-between">
+			<div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-6xl px-15 md:px-16 gap-6 my-10 place-items-center">
 				{/* Text */}
-				<div className="flex flex-col pt-15">
-					<h2 className="text-4xl font-bold">About Me:</h2>
-					<p className="mt-4 max-w-200">
+				<div className="flex flex-col py-6">
+					<h2 className="text-3xl sm:text-4xl font-bold">About Me:</h2>
+					<p className="mt-4 text-sm md:text-md lg:text-lg">
 						Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, officia
 						laborum natus fugiat vitae praesentium quos, possimus molestiae
 						autem quisquam necessitatibus dolorum dicta quis neque cumque at
@@ -33,37 +57,25 @@ export default function HomePage() {
 				</div>
 				{/* Image */}
 				<Fade triggerOnce>
-					<div className="flex items-center justify-center">
+					<div className="flex items-center justify-center py-6">
 						<Image
 							src="/mum.jpg"
 							alt="Lindsey Shop Owner"
-							width={300}
-							height={300}
-							className="rounded-full"
+							width={240}
+							height={240}
+							className="rounded-full w-40 h-40 sm:w-60 sm:h-60 object-cover"
 						/>
 					</div>
 				</Fade>
 			</div>
 
-			{/* Our story */}
-			<div className="grid grid-cols-2 w-full space-between mt-30">
-				{/* Image */}
-				<Fade triggerOnce>
-					<div className="flex items-center justify-center">
-						<Image
-							src="/hangingTree.png"
-							alt="Bouganvillea Tree with Hanging Decoration"
-							width={500}
-							height={500}
-							className="rounded-full"
-						/>
-					</div>
-				</Fade>
-
-				{/* Text */}
-				<div className="flex flex-col justify-center pt-15">
-					<h2 className="text-4xl font-bold">All About The Story:</h2>
-					<p className="mt-4 max-w-200">
+			<div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-6xl px-15 md:px-16 gap-6 my-10">
+				{/* Text: appears first on mobile, first or second on desktop (order controlled via md:order-2) */}
+				<div className="flex flex-col justify-center py-6 md:order-2">
+					<h2 className="text-3xl sm:text-4xl font-bold">
+						All About The Story:
+					</h2>
+					<p className="mt-4 text-sm md:text-md lg:text-lg">
 						Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, officia
 						laborum natus fugiat vitae praesentium quos, possimus molestiae
 						autem quisquam necessitatibus dolorum dicta quis neque cumque at
@@ -73,18 +85,52 @@ export default function HomePage() {
 						veniam, commodi maxime inventore quis molestiae?
 					</p>
 				</div>
+				{/* Image: appears second on mobile, first on desktop (via md:order-1) */}
+				<Fade triggerOnce>
+					<div className="flex items-center justify-center py-6 md:order-1">
+						<Image
+							src="/hangingTree.png"
+							alt="Bouganvillea Tree with Hanging Decoration"
+							width={280}
+							height={280}
+							className="rounded-full w-52 h-52 sm:w-80 sm:h-80 object-cover"
+						/>
+					</div>
+				</Fade>
 			</div>
 
 			{/* Featured products */}
-			<div className="flex flex-col w-full ml-30 mt-30 space-between">
+			<div className="flex flex-col w-full max-w-6xl mx-auto px-4 md:px-16 my-10">
 				{/* Text */}
-				<div className="flex flex-col pt-15">
-					<h2 className="text-4xl font-bold">My Favourites:</h2>
-					<p className="mt-4 max-w-200">
-						These are my current favourite items, which I have handpicked (and often wear myself 😉)
+				<div className="flex flex-col py-6">
+					<h2 className="text-3xl sm:text-4xl font-bold">My Favourites:</h2>
+					<p className="mt-4 text-base sm:text-lg">
+						These are my current favourite items, which I have handpicked (and
+						often wear myself 😉)
 					</p>
 				</div>
-				
+				{/* Products */}
+				<div className="w-full grid gap-6 grid-cols-1 md:grid-cols-3">
+					{!isLoading &&
+						!isError &&
+						favouriteItems.map((item, index) => (
+							<ItemPreview item={item} key={index} clickable={false} />
+						))}
+					{isLoading &&
+						Array.from({ length: 3 }).map((_, index) => (
+							<ItemPreviewSkeleton key={index} />
+						))}
+				</div>
+				<div className="w-full flex justify-center my-6">
+					<Link href={'/items'}>
+						<div className="flex flex-row gap-2 items-center">
+							<h1 className="font-bold text-lg underline hover:text-blue-600 transition-colors">
+								View more items
+							</h1>
+							<ArrowRight />
+						</div>
+					</Link>
+				</div>
 			</div>
 		</div>
 	);

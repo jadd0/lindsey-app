@@ -23,7 +23,7 @@ export default function ItemPreview({
 	return (
 		<div className={'flex flex-col ' + extraClass} onClick={() => click ? click(item) : null}>
 			<Carousel>
-				<CarouselContent>
+				<CarouselContent className='rounded-xl'>
 					{item.imageUrls!.map((imageUrl) => (
 						<CarouselItem
 							key={imageUrl}
@@ -33,7 +33,7 @@ export default function ItemPreview({
 								src={imageUrl}
 								alt="Item image"
 								fill
-								className="object-cover w-full h-full rounded"
+								className="object-cover w-full h-full"
 								sizes="(max-width: 768px) 100vw, 600px"
 							/>
 						</CarouselItem>
