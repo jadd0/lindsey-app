@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from '@/contexts/auth';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function AdminLayout({
@@ -11,9 +11,13 @@ export default function AdminLayout({
 }) {
 	const { user, isLoading } = useAuth();
 	const router = useRouter();
+	const pathname = usePathname();
+
+	console.log(pathname != '/admin/login');
+
 
 	useEffect(() => {
-		if (!isLoading && !user) {
+		if (!isLoading && !user && pathname != '/admin/login') {
 			router.replace('/admin/login');
 		}
 	}, [user, isLoading, router]);
@@ -26,12 +30,12 @@ export default function AdminLayout({
 		);
 	}
 
-	if (!user) {
+	if (!user && pathname != '/admin/login') {
 		return null;
 	}
 
 	return (
-		<div className="font-sans">
+		<div className="font-sans overflow-x-hidden">
 			<main className="p-6">{children}</main>
 		</div>
 	);

@@ -232,13 +232,11 @@ export const setNewFavourites = async (
 export const getItemById = async (id: string) => {
 	const items = await getAllItems();
 
-	const item = items.filter((item) => {
-		item.id == id
-	})
+	const item = items.find((item) => item.id == id);
 
-	if (item) return item[0];
-	return false;
-}
+	if (!item) return false;
+	return item;
+};
 
 export const itemsRepository = {
 	addItem,
@@ -251,5 +249,5 @@ export const itemsRepository = {
 	getPaginatedItems,
 	getFavouriteItems,
 	setNewFavourites,
-	getItemById
+	getItemById,
 };

@@ -81,6 +81,7 @@ export default function LoginForm({
 	className,
 	...props
 }: React.ComponentPropsWithoutRef<'div'>) {
+	console.log("hello")
 	return (
 		<div className="w-screen h-screen flex items-center justify-center">
 			<div
