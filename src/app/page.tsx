@@ -100,11 +100,11 @@ export default function HomePage() {
 			</div>
 
 			{/* Featured products */}
-			<div className="flex flex-col w-full max-w-6xl mx-auto px-4 md:px-16 my-10">
+			<div className="flex flex-col w-full max-w-6xl mx-auto px-15 md:px-16 my-10">
 				{/* Text */}
 				<div className="flex flex-col py-6">
 					<h2 className="text-3xl sm:text-4xl font-bold">My Favourites:</h2>
-					<p className="mt-4 text-base sm:text-lg">
+					<p className="mt-4 text-sm md:text-md lg:text-lg">
 						These are my current favourite items, which I have handpicked (and
 						often wear myself 😉)
 					</p>
