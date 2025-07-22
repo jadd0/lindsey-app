@@ -91,6 +91,12 @@ export const setNewFavourites = async (id1: string, id2: string, id3: string) =>
 	return (await itemsRepository.setNewFavourites(id1, id2, id3));
 }
 
+export const getItemById = cache(async (id: string) => {
+	if (!id) return false;
+	
+	return (await itemsRepository.getItemById(id));
+})
+
 export const itemsServices = {
 	addItem,
 	getItem,
@@ -101,5 +107,6 @@ export const itemsServices = {
 	getAllCategories,
 	getPaginatedItems,
 	getFavouriteItems,
-	setNewFavourites
+	setNewFavourites,
+	getItemById
 };

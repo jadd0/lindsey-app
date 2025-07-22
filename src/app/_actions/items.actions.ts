@@ -65,16 +65,29 @@ export async function getPaginatedItems(cursor: string | null) {
 export async function getFavouriteItemsAction() {
 	try {
 		const result = await itemsServices.getFavouriteItems();
-		const serialised = result.map(serialiseItem)
+		const serialised = result.map(serialiseItem);
 		return { success: true, data: serialised };
 	} catch (error) {
 		return { success: false, error: (error as Error).message };
 	}
 }
 
-export async function setNewFavouritesAction(id1: string, id2: string, id3: string) {
+export async function setNewFavouritesAction(
+	id1: string,
+	id2: string,
+	id3: string
+) {
 	try {
 		const result = await itemsServices.setNewFavourites(id1, id2, id3);
+		return { success: true, data: result };
+	} catch (error) {
+		return { success: false, error: (error as Error).message };
+	}
+}
+
+export async function getItemById(id: string) {
+	try {
+		const result = await itemsServices.getItemById(id);
 		return { success: true, data: result };
 	} catch (error) {
 		return { success: false, error: (error as Error).message };
