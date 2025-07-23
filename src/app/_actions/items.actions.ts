@@ -88,6 +88,21 @@ export async function setNewFavouritesAction(
 export async function getItemById(id: string) {
 	try {
 		const result = await itemsServices.getItemById(id);
+
+		if (!result) {
+			return { success: false, error: '' };
+		}
+
+		const serialised = serialiseItem(result);
+		return { success: true, data: serialised };
+	} catch (error) {
+		return { success: false, error: (error as Error).message };
+	}
+}
+
+export async function deleteItemById(id: string) {
+	try {
+		const result = await itemsServices.deleteItemById(id);
 		return { success: true, data: result };
 	} catch (error) {
 		return { success: false, error: (error as Error).message };

@@ -5,9 +5,10 @@ import { Label } from '@radix-ui/react-label';
 interface ItemInputProps {
 	type: 'title' | 'description' | 'price' | 'link';
 	setValue: (value: any) => void;
+	value: string;
 }
 
-export default function ItemInput({ type, setValue }: ItemInputProps) {
+export default function ItemInput({ type, setValue, value }: ItemInputProps) {
 	return (
 		<div className="grid w-full max-w-sm items-center gap-1">
 			<Label>{capitaliseFirstLetter(type)}</Label>
@@ -17,6 +18,7 @@ export default function ItemInput({ type, setValue }: ItemInputProps) {
 				id={type}
 				placeholder={capitaliseFirstLetter(type)}
 				onChange={(e) => setValue(e.target.value)}
+				value={value}
 			/>
 		</div>
 	);

@@ -6,6 +6,7 @@ import {
 	getFavouriteItemsAction,
 	getPaginatedItems,
 	setNewFavouritesAction,
+	deleteItemById,
 } from '../_actions/items.actions';
 import { Item } from '@/types';
 
@@ -49,7 +50,7 @@ export const useGetFavouriteItems = () => {
 	return useQuery({
 		queryKey: ['items', 'favourites'],
 		queryFn: async () => {
-			return getFavouriteItemsAction()
+			return getFavouriteItemsAction();
 		},
 	});
 };
@@ -66,6 +67,14 @@ export const useSetNewFavourites = () => {
 			id3: string;
 		}) => {
 			return await setNewFavouritesAction(id1, id2, id3);
+		},
+	});
+};
+
+export const useDeleteItemById = () => {
+	return useMutation({
+		mutationFn: async ({ id }: { id: string }) => {
+			return await deleteItemById(id);
 		},
 	});
 };

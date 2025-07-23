@@ -16,14 +16,24 @@ import { useEffect, useState } from 'react';
 
 export default function CategorySelect({
 	setValue,
+	value
 }: {
 	setValue: (value: string) => void;
+	value: string;
 }) {
 	const [category, setCategory] = useState('');
 	const [newCategory, setNewCategory] = useState('');
 	const [localCategories, setLocalCategories] = useState<string[]>([]);
 
 	const { data: categories, isLoading, error } = useGetCategories();
+
+	useEffect(() => {
+		console.log(value)
+		if (value.length > 0) {
+			console.log("hfhijdsxdkjbgbdfhjg")
+			setCategory(value);
+		}
+	}, [])
 
 	useEffect(() => {
 		if (categories?.success) {
@@ -39,7 +49,7 @@ export default function CategorySelect({
 		setValue(value);
 	};
 
-	const handleKeyDown = (e) => {
+	const handleKeyDown = (e: any) => {
 		if (e.key === 'Enter' && newCategory.trim() !== '') {
 			localCategories.push(newCategory.trim());
 			setNewCategory('');
