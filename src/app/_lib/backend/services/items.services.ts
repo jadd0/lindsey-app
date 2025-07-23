@@ -74,7 +74,16 @@ export const updateItemById = async (id: string, updates: ItemUpdate) => {
 };
 
 export const deleteItemById = async (id: string) => {
+	const item = await itemsRepository.getItemById(id);
+
+	if (!item) return false;
+
 	const result = itemsRepository.deleteItemById(id);
+	const imageDeleteResult = imageServices.deleteImages(item.imageUrls!);
+
+	if (!result || !imageDeleteResult) {
+		return false;
+	}
 
 	return result;
 };
@@ -84,18 +93,22 @@ export const getAllCategories = cache(async (): Promise<string[]> => {
 });
 
 export const getFavouriteItems = cache(async (): Promise<Item[]> => {
-	return (await itemsRepository.getFavouriteItems());
+	return await itemsRepository.getFavouriteItems();
 });
 
-export const setNewFavourites = async (id1: string, id2: string, id3: string) => {
-	return (await itemsRepository.setNewFavourites(id1, id2, id3));
-}
+export const setNewFavourites = async (
+	id1: string,
+	id2: string,
+	id3: string
+) => {
+	return await itemsRepository.setNewFavourites(id1, id2, id3);
+};
 
 export const getItemById = cache(async (id: string) => {
 	if (!id) return false;
-	
-	return (await itemsRepository.getItemById(id));
-})
+
+	return await itemsRepository.getItemById(id);
+});
 
 export const itemsServices = {
 	addItem,
@@ -108,5 +121,5 @@ export const itemsServices = {
 	getPaginatedItems,
 	getFavouriteItems,
 	setNewFavourites,
-	getItemById
+	getItemById,
 };

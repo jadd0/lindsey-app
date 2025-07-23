@@ -1,3 +1,4 @@
+import { UTApi } from 'uploadthing/server';
 import { uploadthing } from '../../utils/uploadThing';
 import { nanoid } from 'nanoid';
 
@@ -59,6 +60,25 @@ export const uploadPostImages = async (images: File[]) => {
 	}
 };
 
+export const deleteImages = async (urls: string[]) => {
+	try {
+		urls.forEach(async (url) => {
+			const splitUrl = url.split('/');
+			const key = splitUrl[splitUrl.length];
+
+			const utapi = new UTApi();
+			const { success } = await utapi.deleteFiles(key);
+
+			if (!success) {
+				throw new Error(`Error occurred whilst trying to delete file ${key}`);
+			}
+		});
+	} catch (error) {
+		throw error;
+	}
+};
+
 export const imageServices = {
 	uploadPostImages,
+	deleteImages
 };
