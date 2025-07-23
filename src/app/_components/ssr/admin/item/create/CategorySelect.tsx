@@ -59,7 +59,7 @@ export default function CategorySelect({
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="outline">
+				<Button variant="outline" className='text-black'>
 					{category === '' ? 'Choose Category' : category}
 				</Button>
 			</DropdownMenuTrigger>

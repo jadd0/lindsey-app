@@ -140,7 +140,7 @@ export function MultipleImageUploader({
 			{hasFiles && (
 				<div className="space-y-4">
 					<div className="flex justify-between items-center">
-						<h3 className="text-sm font-medium text-gray-700">
+						<h3 className="text-sm font-medium">
 							Selected Files ({files.length}/{maxFiles})
 						</h3>
 						<Button
@@ -148,9 +148,9 @@ export function MultipleImageUploader({
 							size="sm"
 							onClick={clearAllFiles}
 							disabled={disabled}
-							className="cursor-pointer"
+							className="cursor-pointer text-black"
 						>
-							<Trash2 className="w-4 h-4 mr-1" />
+							<Trash2 className="w-4 h-4 mr-1 text-black" />
 							Clear All
 						</Button>
 					</div>
