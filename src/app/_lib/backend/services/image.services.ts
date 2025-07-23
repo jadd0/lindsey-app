@@ -64,7 +64,9 @@ export const deleteImages = async (urls: string[]) => {
 	try {
 		urls.forEach(async (url) => {
 			const splitUrl = url.split('/');
-			const key = splitUrl[splitUrl.length];
+			const key = splitUrl[splitUrl.length - 1];
+
+			console.log(key)
 
 			const utapi = new UTApi();
 			const { success } = await utapi.deleteFiles(key);
