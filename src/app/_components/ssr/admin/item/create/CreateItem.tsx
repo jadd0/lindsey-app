@@ -51,7 +51,7 @@ export default function CreateItem({ item }: { item?: Item }) {
 			})
 		);
 
-		setFilesLocal((filesLocal) => [...filesLocal, ...files]);
+		setFilesLocal(files);
 	}
 
 	function urlToFile(url: string, filename: string): Promise<File> {
