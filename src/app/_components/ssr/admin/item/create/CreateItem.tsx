@@ -82,6 +82,7 @@ export default function CreateItem({ item }: { item?: Item }) {
 
 		try {
 			const item = {
+				id: '',
 				title,
 				description,
 				price: parseFloat(price.toString()),
@@ -90,6 +91,8 @@ export default function CreateItem({ item }: { item?: Item }) {
 			};
 
 			const validatedItemReturn = itemValidationSchema.safeParse(item);
+
+			console.log('Validated item:', validatedItemReturn.error);
 
 			if (!validatedItemReturn.success) {
 				toast.error('Please ensure all fields are filled out correctly.');

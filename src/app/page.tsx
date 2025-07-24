@@ -40,24 +40,24 @@ export default function HomePage() {
 					/>
 				</div>
 			</div>
-
 			{/* About me section */}
-			<div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-6xl px-15 md:px-16 gap-6 my-10 place-items-center">
-				{/* Text */}
-				<div className="flex flex-col py-6">
-					<h2 className="text-3xl sm:text-4xl font-bold">About Me:</h2>
-					<p className="mt-4 text-sm md:text-md lg:text-lg">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, officia
-						laborum natus fugiat vitae praesentium quos, possimus molestiae
-						autem quisquam necessitatibus dolorum dicta quis neque cumque at
-						soluta. A, saepe? Lorem ipsum dolor, sit amet consectetur
-						adipisicing elit. Tempore, laudantium totam. A adipisci aut rerum
-						est. Adipisci aliquid voluptas sequi eum, rerum accusantium nihil
-						veniam, commodi maxime inventore quis molestiae?
-					</p>
-				</div>
-				{/* Image */}
-				<Fade triggerOnce>
+			<Fade triggerOnce>
+				<div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-6xl px-15 md:px-16 gap-6 my-10 place-items-center">
+					{/* Text */}
+					<div className="flex flex-col py-6">
+						<h2 className="text-3xl sm:text-4xl font-bold">About Me:</h2>
+						<p className="mt-4 text-sm md:text-md lg:text-lg">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. A,
+							officia laborum natus fugiat vitae praesentium quos, possimus
+							molestiae autem quisquam necessitatibus dolorum dicta quis neque
+							cumque at soluta. A, saepe? Lorem ipsum dolor, sit amet
+							consectetur adipisicing elit. Tempore, laudantium totam. A
+							adipisci aut rerum est. Adipisci aliquid voluptas sequi eum, rerum
+							accusantium nihil veniam, commodi maxime inventore quis molestiae?
+						</p>
+					</div>
+					{/* Image */}
+
 					<div className="flex items-center justify-center py-6">
 						<Image
 							src="/mum.jpg"
@@ -67,27 +67,28 @@ export default function HomePage() {
 							className="rounded-full w-40 h-40 sm:w-60 sm:h-60 object-cover"
 						/>
 					</div>
-				</Fade>
-			</div>
-
-			<div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-6xl px-15 md:px-16 gap-6 my-10">
-				{/* Text: appears first on mobile, first or second on desktop (order controlled via md:order-2) */}
-				<div className="flex flex-col justify-center py-6 md:order-2">
-					<h2 className="text-3xl sm:text-4xl font-bold">
-						All About The Story:
-					</h2>
-					<p className="mt-4 text-sm md:text-md lg:text-lg">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, officia
-						laborum natus fugiat vitae praesentium quos, possimus molestiae
-						autem quisquam necessitatibus dolorum dicta quis neque cumque at
-						soluta. A, saepe? Lorem ipsum dolor, sit amet consectetur
-						adipisicing elit. Tempore, laudantium totam. A adipisci aut rerum
-						est. Adipisci aliquid voluptas sequi eum, rerum accusantium nihil
-						veniam, commodi maxime inventore quis molestiae?
-					</p>
 				</div>
-				{/* Image: appears second on mobile, first on desktop (via md:order-1) */}
-				<Fade triggerOnce>
+			</Fade>
+
+			{/* Story section */}
+			<Fade triggerOnce>
+				<div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-6xl px-15 md:px-16 gap-6 my-10">
+					{/* Text: appears first on mobile, first or second on desktop (order controlled via md:order-2) */}
+					<div className="flex flex-col justify-center py-6 md:order-2">
+						<h2 className="text-3xl sm:text-4xl font-bold">
+							All About The Story:
+						</h2>
+						<p className="mt-4 text-sm md:text-md lg:text-lg">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. A,
+							officia laborum natus fugiat vitae praesentium quos, possimus
+							molestiae autem quisquam necessitatibus dolorum dicta quis neque
+							cumque at soluta. A, saepe? Lorem ipsum dolor, sit amet
+							consectetur adipisicing elit. Tempore, laudantium totam. A
+							adipisci aut rerum est. Adipisci aliquid voluptas sequi eum, rerum
+							accusantium nihil veniam, commodi maxime inventore quis molestiae?
+						</p>
+					</div>
+					{/* Image: appears second on mobile, first on desktop (via md:order-1) */}
 					<div className="flex items-center justify-center py-6 md:order-1">
 						<Image
 							src="/hangingTree.png"
@@ -97,8 +98,8 @@ export default function HomePage() {
 							className="rounded-full w-52 h-52 sm:w-80 sm:h-80 object-cover"
 						/>
 					</div>
-				</Fade>
-			</div>
+				</div>
+			</Fade>
 
 			{/* Featured products */}
 			<div className="flex flex-col w-full max-w-6xl mx-auto px-15 md:px-16 my-10">
@@ -112,15 +113,17 @@ export default function HomePage() {
 				</div>
 				{/* Products */}
 				<div className="w-full grid gap-6 grid-cols-1 md:grid-cols-3">
-					{!isLoading &&
-						!isError &&
-						favouriteItems.map((item, index) => (
-							<ItemPreview item={item} key={index} clickable={false} />
-						))}
-					{isLoading &&
-						Array.from({ length: 3 }).map((_, index) => (
-							<ItemPreviewSkeleton key={index} />
-						))}
+					<Fade cascade damping={0.1} triggerOnce>
+						{!isLoading &&
+							!isError &&
+							favouriteItems.map((item, index) => (
+								<ItemPreview item={item} key={index} clickable={false} />
+							))}
+						{isLoading &&
+							Array.from({ length: 3 }).map((_, index) => (
+								<ItemPreviewSkeleton key={index} />
+							))}
+					</Fade>
 				</div>
 				<div className="w-full flex justify-center my-6">
 					<Link href={'/items'}>
