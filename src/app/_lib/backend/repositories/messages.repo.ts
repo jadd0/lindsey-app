@@ -93,7 +93,7 @@ export const deleteMessageById = async (id: string): Promise<boolean> => {
 		await deleteDoc(docRef);
 
 		console.log('Messaege successfully deleted');
-    
+
 		return true;
 	} catch (error) {
 		throw new Error(
@@ -102,4 +102,12 @@ export const deleteMessageById = async (id: string): Promise<boolean> => {
 			}`
 		);
 	}
+};
+
+export const messagesRepository = {
+	createNewMessage,
+	getAllMessages,
+	getMessageById,
+	markMessageAsSeen,
+	deleteMessageById,
 };
