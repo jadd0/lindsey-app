@@ -1,9 +1,12 @@
 'use server';
 
 import { imageServices } from '@/services/image.services';
+import { requireAuth } from '../_lib/auth/backendAuth';
 
 export async function uploadImagesAction(images: File[]) {
 	try {
+		if (!(await requireAuth())) return { error: 'Unauthorized' };
+
 		const result = await imageServices.uploadPostImages(images);
 		return { success: true, data: result };
 	} catch (error) {

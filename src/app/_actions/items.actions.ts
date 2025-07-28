@@ -2,6 +2,7 @@
 
 import { itemsServices } from '@/services/items.services';
 import { Item } from '@/types';
+import { requireAuth } from '../_lib/auth/backendAuth';
 
 // Helper: Converts Firestore Timestamp to JS Date
 function serialiseItem(item: Item) {
@@ -29,6 +30,8 @@ function serialiseItem(item: Item) {
 
 export async function createItemAction(item: Item, images: File[]) {
 	try {
+		if (!(await requireAuth())) return { error: 'Unauthorized' };
+
 		const result = await itemsServices.addItem(item, images);
 		return { success: true, data: result };
 	} catch (error) {
@@ -46,11 +49,9 @@ export async function getCategoriesAction() {
 }
 
 export async function getAllItemsAction() {
-	try {
+	try {	
 		const result = await itemsServices.getAllItems();
-		// Serialise all items to ensure createdAt is a Date
 		const serialised = result.map(serialiseItem);
-		console.log(serialised);
 		return { success: true, data: serialised };
 	} catch (error) {
 		return { success: false, error: (error as Error).message };
@@ -78,6 +79,8 @@ export async function setNewFavouritesAction(
 	id3: string
 ) {
 	try {
+		if (!(await requireAuth())) return { error: 'Unauthorized' };
+
 		const result = await itemsServices.setNewFavourites(id1, id2, id3);
 		return { success: true, data: result };
 	} catch (error) {
@@ -102,6 +105,8 @@ export async function getItemById(id: string) {
 
 export async function deleteItemById(id: string) {
 	try {
+		if (!(await requireAuth())) return { error: 'Unauthorized' };
+
 		const result = await itemsServices.deleteItemById(id);
 		return { success: true, data: result };
 	} catch (error) {

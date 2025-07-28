@@ -2,6 +2,7 @@
 
 import admin from '../firebase/admin';
 import { cookies } from 'next/headers';
+import nookies from 'nookies'
 
 export async function authHandlerReq(req: any, res: any) {
 	const idToken = req.headers.authorization?.split('Bearer ')[1];
@@ -23,7 +24,7 @@ export async function authHandlerReq(req: any, res: any) {
  */
 export async function requireAuth() {
 	const cookieStore = await cookies(); 
-	const token = cookieStore.get('coonect.sid')?.value;
+	const token = cookieStore.get('token')?.value;
 
 	if (!token) return null;
 	try {
