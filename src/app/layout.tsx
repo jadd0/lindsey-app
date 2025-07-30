@@ -3,8 +3,9 @@ import './globals.css';
 import { ReactQueryClientProvider } from '@/components/ReactQueryClientProvider';
 import { AuthProvider } from '@/contexts/auth';
 import { Toaster } from 'sonner';
-import { ReactLenis, useLenis } from 'lenis/react'
+import { ReactLenis, useLenis } from 'lenis/react';
 import Navbar from './_components/layout/Navbar';
+import Footer from './_components/layout/Footer';
 
 export const metadata: Metadata = {
 	title: 'Your App',
@@ -25,6 +26,7 @@ export default function RootLayout({
 						<ReactLenis root />
 						<Navbar />
 						{children}
+						<Footer />
 					</AuthProvider>
 				</ReactQueryClientProvider>
 			</body>
