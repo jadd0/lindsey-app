@@ -60,7 +60,7 @@ export default function ContactPage() {
 			const response = await createNewMessageAction({ message: messageData });
 
 			if (response.success) {
-				alert('Message sent successfully!');
+				toast.success('Message sent successfully!');
 				setTitle('');
 				setEmail('');
 				setMessage('');
@@ -153,7 +153,7 @@ export default function ContactPage() {
 						{message.length} / {MESSAGE_MAX}
 					</div>
 				</div>
-				<Button type="submit" className="w-fit mt-2 bg-white text-black cursor-pointer">
+				<Button type="submit" className="w-fit mt-2 bg-white text-black cursor-pointer hover:bg-gray-400">
 					Send Message
 				</Button>
 			</form>
