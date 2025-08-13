@@ -100,11 +100,24 @@ export const getRecentMessages = async () => {
 	}
 };
 
+export const getMessagesPage = async (lastDoc: any) => {
+	try {
+		return await messagesRepository.getMessagesPage(lastDoc);
+	} catch (error) {
+		throw new Error(
+			`Error retrieving messages page: ${
+				error instanceof Error ? error.message : 'Unknown error'
+			}`
+		);
+	}
+};
+
 export const messagesServices = {
 	createNewMessage,
 	getAllMessages,
 	getMessageById,
 	markMessageAsSeen,
 	deleteMessageById,
-	getRecentMessages
+	getRecentMessages,
+	getMessagesPage,
 };

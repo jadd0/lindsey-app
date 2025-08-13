@@ -16,6 +16,7 @@ import {
 import { Item, ItemUpdate } from '@/types';
 import { db } from '../../firebase/firebase';
 import { Message } from '@/types';
+import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 
 export const createNewMessage = async ({
 	message,
@@ -135,6 +136,45 @@ export const getRecentMessages = async (): Promise<Message[]> => {
 	}
 };
 
+export const getMessagesPage = async (
+	lastDoc: QueryDocumentSnapshot<DocumentData> | null
+): Promise<{
+	messages: Message[];
+	lastDoc: QueryDocumentSnapshot<DocumentData> | null;
+}> => {
+	try {
+		const messagesCollection = collection(db, 'messages');
+
+		const q = lastDoc
+			? query(
+					messagesCollection,
+					orderBy('createdAt', 'desc'),
+					startAfter(lastDoc),
+					limit(10)
+			  )
+			: query(messagesCollection, orderBy('createdAt', 'desc'), limit(10));
+
+		const snapshot = await getDocs(q);
+
+		const messagesList: Message[] = [];
+		snapshot.forEach((doc) => {
+			const data = doc.data() as Omit<Message, 'id'>;
+			messagesList.push({ ...data, id: doc.id });
+		});
+
+		const lastVisible =
+			snapshot.docs.length > 0 ? snapshot.docs[snapshot.docs.length - 1] : null;
+
+		return { messages: messagesList, lastDoc: lastVisible };
+	} catch (error) {
+		throw new Error(
+			`Error retrieving messages: ${
+				error instanceof Error ? error.message : 'Unknown error'
+			}`
+		);
+	}
+};
+
 export const messagesRepository = {
 	createNewMessage,
 	getAllMessages,
@@ -142,4 +182,5 @@ export const messagesRepository = {
 	markMessageAsSeen,
 	deleteMessageById,
 	getRecentMessages,
+	getMessagesPage
 };

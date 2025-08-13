@@ -32,7 +32,7 @@ export async function getAllMessagesAction() {
 
 export async function getRecentMessagesAction() {
 	try {
-		console.log("auth", await requireAuth())
+		console.log('auth', await requireAuth());
 		if (!(await requireAuth())) return { error: 'Unauthorized' };
 
 		const result = await messagesServices.getRecentMessages();
@@ -69,6 +69,16 @@ export async function deleteMessageByIdAction(id: string) {
 		if (!(await requireAuth())) return { error: 'Unauthorized' };
 
 		const result = await messagesServices.deleteMessageById(id);
+		return { success: true, data: result };
+	} catch (error) {
+		return { success: false, error: (error as Error).message };
+	}
+}
+
+export async function getMessagesPageAction(lastDoc: any | null) {
+	try {
+		if (!(await requireAuth())) return { error: 'Unauthorized' };
+		const result = await messagesServices.getMessagesPage(lastDoc);
 		return { success: true, data: result };
 	} catch (error) {
 		return { success: false, error: (error as Error).message };
