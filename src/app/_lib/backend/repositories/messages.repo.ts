@@ -11,6 +11,7 @@ import {
 	orderBy,
 	startAfter,
 	limit as limitFn,
+	limit,
 } from 'firebase/firestore';
 import { Item, ItemUpdate } from '@/types';
 import { db } from '../../firebase/firebase';
@@ -72,7 +73,7 @@ export const getMessageById = async (
 
 export const markMessageAsSeen = async (id: string): Promise<boolean> => {
 	try {
-		const docRef = doc(db, 'items', id);
+		const docRef = doc(db, 'messages', id);
 		await updateDoc(docRef, {
 			seen: true,
 		});
@@ -89,12 +90,29 @@ export const markMessageAsSeen = async (id: string): Promise<boolean> => {
 
 export const deleteMessageById = async (id: string): Promise<boolean> => {
 	try {
-		const docRef = doc(db, 'items', id);
+		const docRef = doc(db, 'messages', id);
 		await deleteDoc(docRef);
 
 		console.log('Messaege successfully deleted');
 
 		return true;
+	} catch (error) {
+		throw new Error(
+			`Error updating message ${id} due to error: ${
+				error instanceof Error ? error.message : 'Unknown error'
+			}`
+		);
+	}
+};
+
+export const getRecentMessages = async () => {
+	try {
+		const colRef = collection(db, 'messages');
+		const q = query(colRef, orderBy('createdAt', 'desc'), limit(5));
+
+		const querySnapshot = await getDocs(q);
+
+		return querySnapshot;
 	} catch (error) {
 		throw new Error(
 			`Error updating message ${id} due to error: ${
@@ -110,4 +128,5 @@ export const messagesRepository = {
 	getMessageById,
 	markMessageAsSeen,
 	deleteMessageById,
+	getRecentMessages,
 };

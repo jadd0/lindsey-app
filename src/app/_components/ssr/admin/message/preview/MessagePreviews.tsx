@@ -1,5 +1,6 @@
 import { Message } from "@/app/_shared/types";
 
+
 export default function MessagePreviews({
   messages,
   amount
@@ -16,6 +17,7 @@ export default function MessagePreviews({
           </li>
         ))}
       </ul>
+      <button>View more...</button>
     </div>
   );
 }

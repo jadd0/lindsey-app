@@ -88,10 +88,23 @@ export const deleteMessageById = async (id: string) => {
 	}
 };
 
+export const getRecentMessages = async () => {
+	try {
+		return await messagesRepository.getRecentMessages();
+	} catch (error) {
+		throw new Error(
+			`Error retrieving recent messages: ${
+				error instanceof Error ? error.message : 'Unknown error'
+			}`
+		);
+	}
+};
+
 export const messagesServices = {
 	createNewMessage,
 	getAllMessages,
 	getMessageById,
 	markMessageAsSeen,
 	deleteMessageById,
+	getRecentMessages
 };
