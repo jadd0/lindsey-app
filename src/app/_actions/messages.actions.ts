@@ -32,6 +32,7 @@ export async function getAllMessagesAction() {
 
 export async function getRecentMessagesAction() {
 	try {
+		console.log("auth", await requireAuth())
 		if (!(await requireAuth())) return { error: 'Unauthorized' };
 
 		const result = await messagesServices.getRecentMessages();

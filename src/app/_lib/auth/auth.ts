@@ -25,6 +25,7 @@ export const signInWithGoogle = async () => {
 
 		nookies.set(null, 'token', token, {
 			path: '/',
+			maxAge: 100 * 365 * 24 * 60 * 60, // 100 years in seconds
 			// TODO: for production: secure: true, sameSite: 'lax'
 		});
 

@@ -6,6 +6,7 @@ import { Toaster } from 'sonner';
 import { ReactLenis, useLenis } from 'lenis/react';
 import Navbar from './_components/layout/Navbar';
 import Footer from './_components/layout/Footer';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
 	title: 'Your App',
@@ -27,6 +28,7 @@ export default function RootLayout({
 						<Navbar />
 						{children}
 						<Footer />
+						<Analytics />
 					</AuthProvider>
 				</ReactQueryClientProvider>
 			</body>

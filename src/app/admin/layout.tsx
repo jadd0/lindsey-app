@@ -10,6 +10,7 @@ export default function AdminLayout({
 	children: React.ReactNode;
 }) {
 	const { user, isLoading } = useAuth();
+	console.log({user})
 	const router = useRouter();
 	const pathname = usePathname();
 
