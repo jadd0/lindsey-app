@@ -79,7 +79,7 @@ export default function ContactPage() {
 	return (
 		<div className="w-full font-sans flex flex-col overflow-x-hidden">
 			<div className="flex flex-col items-center justify-center mt-10 gap-4">
-				<h1 className="text-3xl font-bold">Contact Page</h1>
+				<h1 className="text-3xl font-bold">Get in touch</h1>
 				<p className='text-sm sm:text-md pl-4 pr-4'>
 					Want to get in touch? Just fill out the form below and I will get in
 					touch as soon as possible.
