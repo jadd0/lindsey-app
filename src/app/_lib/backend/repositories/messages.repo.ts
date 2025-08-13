@@ -105,17 +105,30 @@ export const deleteMessageById = async (id: string): Promise<boolean> => {
 	}
 };
 
-export const getRecentMessages = async () => {
+export const getRecentMessages = async (): Promise<Message[]> => {
 	try {
-		const colRef = collection(db, 'messages');
-		const q = query(colRef, orderBy('createdAt', 'desc'), limit(5));
+		const messagesCollection = collection(db, 'messages');
+		const recentMessagesQuery = query(
+			messagesCollection,
+			orderBy('createdAt', 'desc'),
+			limit(5)
+		);
 
-		const querySnapshot = await getDocs(q);
+		const messagesSnapshot = await getDocs(recentMessagesQuery);
+		const messagesList: Message[] = [];
 
-		return querySnapshot;
+		messagesSnapshot.forEach((doc) => {
+			const data = doc.data() as Message;
+			messagesList.push({
+				...data,
+				id: doc.id,
+			});
+		});
+
+		return messagesList;
 	} catch (error) {
 		throw new Error(
-			`Error updating message ${id} due to error: ${
+			`Error retrieving recent messages: ${
 				error instanceof Error ? error.message : 'Unknown error'
 			}`
 		);
