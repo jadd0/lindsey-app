@@ -3,6 +3,7 @@
 import { useAuth } from '@/contexts/auth';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
+import nookies from 'nookies';
 
 export default function AdminLayout({
 	children,
@@ -10,16 +11,22 @@ export default function AdminLayout({
 	children: React.ReactNode;
 }) {
 	const { user, isLoading } = useAuth();
-	console.log({user})
 	const router = useRouter();
 	const pathname = usePathname();
-
-	console.log(pathname != '/admin/login');
-
 
 	useEffect(() => {
 		if (!isLoading && !user && pathname != '/admin/login') {
 			router.replace('/admin/login');
+		}
+
+		if (user) {
+			user.getIdToken()
+				.then((token: any) => {
+				nookies.set(null, 'token', token, {
+					path: '/',
+					// TODO: for production: secure: true, sameSite: 'lax'
+				});
+			});
 		}
 	}, [user, isLoading, router]);
 

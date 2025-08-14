@@ -3,11 +3,13 @@ import { Timestamp } from 'firebase/firestore';
 export function timeAgo(createdAt: Timestamp | Date | number): string {
 	let date: Date;
 
+	console.log(typeof createdAt);
+
 	if (createdAt instanceof Timestamp) {
 		date = createdAt.toDate();
 	} else if (createdAt instanceof Date) {
 		date = createdAt;
-	} else if (typeof createdAt === 'number') {
+	} else if (typeof createdAt === 'number' || typeof createdAt === 'string') {
 		date = new Date(createdAt);
 	} else {
 		throw new Error('Invalid date format');
@@ -33,4 +35,25 @@ export function timeAgo(createdAt: Timestamp | Date | number): string {
 	}
 
 	return 'just now';
+}
+
+export function serialiseItem(item: any) {
+	let createdAt: string | null = null;
+
+	if (item.createdAt instanceof Date) {
+		createdAt = item.createdAt.toISOString();
+	} else if (
+		item.createdAt &&
+		typeof item.createdAt.seconds === 'number' &&
+		typeof item.createdAt.nanoseconds === 'number'
+	) {
+		createdAt = new Date(
+			item.createdAt.seconds * 1000 +
+				Math.floor(item.createdAt.nanoseconds / 1e6)
+		).toISOString();
+	} else if (typeof item.createdAt === 'string') {
+		createdAt = item.createdAt;
+	}
+
+	return { ...item, createdAt };
 }

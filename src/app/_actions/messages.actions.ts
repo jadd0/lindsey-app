@@ -3,7 +3,8 @@
 import { messagesServices } from '../_lib/backend/services/messages.services';
 import { Message } from '../_shared/types';
 import { requireAuth } from '../_lib/auth/backendAuth';
-
+import { serialiseItem } from '../_lib/utils/date';
+	 
 // TODO: implement backend auth
 
 export async function createNewMessageAction({
@@ -75,12 +76,21 @@ export async function deleteMessageByIdAction(id: string) {
 	}
 }
 
-export async function getMessagesPageAction(lastDoc: any | null) {
+export async function getMessagesPageAction(
+	pageParam: number | null // cursor is number or null
+): Promise<{ messages: any[]; nextCursor: number | null }> {
 	try {
-		if (!(await requireAuth())) return { error: 'Unauthorized' };
-		const result = await messagesServices.getMessagesPage(lastDoc);
-		return { success: true, data: result };
+		if (!(await requireAuth())) throw new Error('Unauthorized');
+
+		const result = await messagesServices.getMessagesPage(pageParam);
+		const serialisedMessages = result.messages.map(serialiseItem);
+
+		return {
+			messages: serialisedMessages,
+			nextCursor: result.lastCreatedAt,
+		};
 	} catch (error) {
-		return { success: false, error: (error as Error).message };
+		console.error('getMessagesPageAction error:', error);
+		throw error;
 	}
 }

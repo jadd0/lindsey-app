@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import admin from '@/lib/firebase/admin';
+import nookies from 'nookies';
 
 export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;

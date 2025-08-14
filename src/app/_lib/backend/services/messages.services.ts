@@ -100,9 +100,11 @@ export const getRecentMessages = async () => {
 	}
 };
 
-export const getMessagesPage = async (lastDoc: any) => {
+export const getMessagesPage = async (lastCreatedAt: number | null) => {
 	try {
-		return await messagesRepository.getMessagesPage(lastDoc);
+		return await messagesRepository.getMessagesPageByLastCreatedAt(
+			lastCreatedAt
+		);
 	} catch (error) {
 		throw new Error(
 			`Error retrieving messages page: ${

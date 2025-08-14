@@ -136,43 +136,37 @@ export const getRecentMessages = async (): Promise<Message[]> => {
 	}
 };
 
-export const getMessagesPage = async (
-	lastDoc: QueryDocumentSnapshot<DocumentData> | null
-): Promise<{
-	messages: Message[];
-	lastDoc: QueryDocumentSnapshot<DocumentData> | null;
-}> => {
-	try {
-		const messagesCollection = collection(db, 'messages');
+export const getMessagesPageByLastCreatedAt = async (
+	lastCreatedAt: number | null // cursor is JS timestamp (number)
+): Promise<{ messages: Message[]; lastCreatedAt: number | null }> => {
+	const messagesCollection = collection(db, 'messages');
+	let q;
 
-		const q = lastDoc
-			? query(
-					messagesCollection,
-					orderBy('createdAt', 'desc'),
-					startAfter(lastDoc),
-					limit(10)
-			  )
-			: query(messagesCollection, orderBy('createdAt', 'desc'), limit(10));
-
-		const snapshot = await getDocs(q);
-
-		const messagesList: Message[] = [];
-		snapshot.forEach((doc) => {
-			const data = doc.data() as Omit<Message, 'id'>;
-			messagesList.push({ ...data, id: doc.id });
-		});
-
-		const lastVisible =
-			snapshot.docs.length > 0 ? snapshot.docs[snapshot.docs.length - 1] : null;
-
-		return { messages: messagesList, lastDoc: lastVisible };
-	} catch (error) {
-		throw new Error(
-			`Error retrieving messages: ${
-				error instanceof Error ? error.message : 'Unknown error'
-			}`
+	if (lastCreatedAt) {
+		q = query(
+			messagesCollection,
+			orderBy('createdAt', 'desc'),
+			startAfter(new Date(lastCreatedAt)), // deserialize as JS Date
+			limitFn(10)
 		);
+	} else {
+		q = query(messagesCollection, orderBy('createdAt', 'desc'), limitFn(10));
 	}
+
+	const snapshot = await getDocs(q);
+	const messagesList: Message[] = snapshot.docs.map((docSnap) => ({
+		...(docSnap.data() as Omit<Message, 'id'>),
+		id: docSnap.id,
+	}));
+
+	const lastVisible = snapshot.docs.length
+		? snapshot.docs[snapshot.docs.length - 1]
+				.data()
+				.createdAt.toDate()
+				.getTime() // as number
+		: null;
+
+	return { messages: messagesList, lastCreatedAt: lastVisible };
 };
 
 export const messagesRepository = {
@@ -182,5 +176,5 @@ export const messagesRepository = {
 	markMessageAsSeen,
 	deleteMessageById,
 	getRecentMessages,
-	getMessagesPage
+	getMessagesPageByLastCreatedAt,
 };
