@@ -136,7 +136,6 @@ export default function HomePage() {
 					</Link>
 				</div>
 			</div>
-			<Footer />
 		</div>
 	);
 }
