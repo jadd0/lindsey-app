@@ -1,5 +1,6 @@
 'use client';
 
+import ReCAPTCHA from 'react-google-recaptcha';
 import { toast } from 'sonner';
 import { createNewMessageAction } from '../_actions/messages.actions';
 import { messageValidationInsertSchema } from '../_shared/validation';
@@ -38,8 +39,14 @@ export default function ContactPage() {
 	const [title, setTitle] = useState('');
 	const [email, setEmail] = useState('');
 	const [message, setMessage] = useState('');
+	const captchaRef = useRef(null);
+
 	const TITLE_MAX = 75;
 	const MESSAGE_MAX = 500;
+
+	function onChange(value) {
+		console.log('Captcha value:', value);
+	}
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -50,6 +57,14 @@ export default function ContactPage() {
 		};
 
 		try {
+			const token = await captchaRef.current.executeAsync();
+			captchaRef.current.reset();
+
+			if (!token) {
+				toast.error('Failed to verify you are human.');
+				return;
+			}
+
 			const validated = messageValidationInsertSchema.safeParse(messageData);
 
 			if (validated.error) {
@@ -57,7 +72,10 @@ export default function ContactPage() {
 				return;
 			}
 
-			const response = await createNewMessageAction({ message: messageData });
+			const response = await createNewMessageAction({
+				message: messageData,
+				recaptchaToken: token,
+			});
 
 			if (response.success) {
 				toast.success('Message sent successfully!');
@@ -80,7 +98,7 @@ export default function ContactPage() {
 		<div className="w-full font-sans flex flex-col overflow-x-hidden">
 			<div className="flex flex-col items-center justify-center mt-10 gap-4">
 				<h1 className="text-3xl font-bold">Get in touch</h1>
-				<p className='text-sm sm:text-md pl-4 pr-4'>
+				<p className="text-sm sm:text-md pl-4 pr-4">
 					Want to get in touch? Just fill out the form below and I will get in
 					touch as soon as possible.
 				</p>
@@ -153,7 +171,15 @@ export default function ContactPage() {
 						{message.length} / {MESSAGE_MAX}
 					</div>
 				</div>
-				<Button type="submit" className="w-fit mt-2 bg-white text-black cursor-pointer hover:bg-gray-400">
+				<ReCAPTCHA
+					sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+					size="invisible"
+					ref={captchaRef}
+				/>
+				<Button
+					type="submit"
+					className="w-fit mt-2 bg-white text-black cursor-pointer hover:bg-gray-400"
+				>
 					Send Message
 				</Button>
 			</form>

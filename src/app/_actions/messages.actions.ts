@@ -4,15 +4,36 @@ import { messagesServices } from '../_lib/backend/services/messages.services';
 import { Message } from '../_shared/types';
 import { requireAuth } from '../_lib/auth/backendAuth';
 import { serialiseItem } from '../_lib/utils/date';
-	 
+
 // TODO: implement backend auth
 
 export async function createNewMessageAction({
 	message,
+	recaptchaToken,
 }: {
 	message: Message;
+	recaptchaToken: any;
 }) {
 	try {
+		const secretKey = process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY!;
+		const verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
+
+		const res = await fetch(verifyUrl, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: `secret=${secretKey}&response=${recaptchaToken}`,
+		});
+
+		const data = await res.json();
+
+		if (!data.success || data.score < 0.5) {
+			// adjust threshold as needed
+			return {
+				success: false,
+				error: 'Failed reCAPTCHA verification.',
+			};
+		}
+
 		const result = await messagesServices.createNewMessage({ message });
 		return { success: true, data: result };
 	} catch (error) {
