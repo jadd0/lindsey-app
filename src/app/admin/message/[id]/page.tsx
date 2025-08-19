@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { Trash2 } from 'lucide-react';
+
 
 import {
 	markMessageAsSeenAction,
@@ -12,12 +12,12 @@ import MessageDeleteButton from '@/app/_components/ssr/admin/message/display/Mes
 import { timeAgo } from '@/app/_lib/utils/date';
 import MessageEmailAddress from '@/app/_components/ssr/admin/message/display/MessageEmailAddress';
 
-export default async function MessagePage({
-	params,
-}: {
-	params: { id: string };
-}) {
-	const { id } = params;
+type PageProps = {
+  params: Promise<{ id: string }>;
+};
+
+export default async function MessagePage({ params }: PageProps) {
+  const { id } = await params;
 
 	// Fetch message data
 	const messageResult = await getMessageByIdAction(id);

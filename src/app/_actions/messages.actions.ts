@@ -12,7 +12,7 @@ export async function createNewMessageAction({
 	recaptchaToken,
 }: {
 	message: Message;
-	recaptchaToken: any;
+	recaptchaToken: string;
 }) {
 	try {
 		const secretKey = process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY!;

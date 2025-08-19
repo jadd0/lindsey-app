@@ -22,7 +22,6 @@ export default function FavouriteItemsPage() {
 	const {
 		mutate: setNewFavourites,
 		isSuccess,
-		isPending,
 		isError: setNewFavouritesError,
 	} = useSetNewFavourites();
 

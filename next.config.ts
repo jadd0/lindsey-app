@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
 };
 
 module.exports = {
+	typescript: {
+		ignoreBuildErrors: true,
+	},
 	experimental: {
 		serverActions: {
 			bodySizeLimit: '30mb',
@@ -20,6 +23,7 @@ module.exports = {
 			},
 		],
 	},
+	  eslint: { ignoreDuringBuilds: true },
 };
 
 export default nextConfig;

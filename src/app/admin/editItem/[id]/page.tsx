@@ -1,25 +1,26 @@
-import { getItemById } from '@/app/_actions/items.actions';
-import CreateItem from '@/app/_components/ssr/admin/item/create/CreateItem';
-import DeleteItemButton from '@/app/_components/ssr/admin/item/create/DeleteButton';
-import { Item } from '@/app/_shared/types';
-import { notFound } from 'next/navigation';
-import { toast } from 'sonner';
+import { getItemById } from "@/app/_actions/items.actions";
+import CreateItem from "@/app/_components/ssr/admin/item/create/CreateItem";
+import DeleteItemButton from "@/app/_components/ssr/admin/item/create/DeleteButton";
+import { Item } from "@/app/_shared/types";
+import { notFound } from "next/navigation";
 
-export default async function ItemPage({ params }: { params: { id: string } }) {
-	const { id } = await params;
-	const itemResult = await getItemById(id);
+type PageProps = {
+  params: Promise<{ id: string }>;
+};
 
-	console.log(itemResult);
+export default async function ItemPage({ params }: PageProps) {
+  const { id } = await params;
 
-	if (!itemResult || !itemResult.data) {
-		notFound();
-	}
+  const itemResult = await getItemById(id);
 
-	return (
-		<div className="flex flex-col items-center gap-5">
-			<DeleteItemButton id={id} />
+  if (!itemResult || !itemResult.data) {
+    notFound();
+  }
 
-			<CreateItem item={itemResult.data as Item} />
-		</div>
-	);
+  return (
+    <div className="flex flex-col items-center gap-5">
+      <DeleteItemButton id={id} />
+      <CreateItem item={itemResult.data as Item} />
+    </div>
+  );
 }

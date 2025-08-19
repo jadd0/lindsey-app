@@ -109,7 +109,7 @@ export function MultipleImageUploader({
 						multiple: true, // Enable multiple file selection
 					}}
 					className="w-full p-0.5"
-					disabled={disabled}
+					arias-disabled={disabled}
 				>
 					<FileInput className="w-full overflow-hidden flex flex-col items-center justify-center border-dashed border-2 border-gray-300 hover:border-blue-400 p-8 rounded-lg transition-all duration-200 bg-gray-50 hover:bg-blue-50">
 						<div className="w-full rounded-xl flex flex-col gap-3 items-center justify-center">

@@ -1,37 +1,39 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import { ReactQueryClientProvider } from '@/components/ReactQueryClientProvider';
-import { AuthProvider } from '@/contexts/auth';
-import { Toaster } from 'sonner';
-import { ReactLenis, useLenis } from 'lenis/react';
-import Navbar from './_components/layout/Navbar';
-import Footer from './_components/layout/Footer';
-import { Analytics } from '@vercel/analytics/react';
+import type { Metadata } from "next";
+import "./globals.css";
+import { ReactQueryClientProvider } from "@/components/ReactQueryClientProvider";
+import { AuthProvider } from "@/contexts/auth";
+import { Toaster } from "sonner";
+import { ReactLenis, useLenis } from "lenis/react";
+import Navbar from "./_components/layout/Navbar";
+import Footer from "./_components/layout/Footer";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
-	title: 'Your App',
-	description: 'Your app description',
+  title: "Your App",
+  description: "Your app description",
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-	return (
-		<html lang="en">
-			<body className="bg-[#1e60e1] text-white overflow-x-hidden">
-				<ReactQueryClientProvider>
-					<Toaster position="top-right" closeButton={false} />
-					<AuthProvider>
-						<ReactLenis root />
-						<Navbar />
-						{children}
-						<Footer />
-						<Analytics />
-					</AuthProvider>
-				</ReactQueryClientProvider>
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en">
+      <body className="bg-[#1e60e1] text-white overflow-x-hidden">
+        <ReactQueryClientProvider>
+          <Toaster position="top-right" closeButton={false} />
+          <AuthProvider>
+            <ReactLenis root />
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              {children}
+            </div>
+            <Footer />
+            <Analytics />
+          </AuthProvider>
+        </ReactQueryClientProvider>
+      </body>
+    </html>
+  );
 }
