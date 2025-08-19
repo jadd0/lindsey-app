@@ -9,8 +9,8 @@ import Footer from "./_components/layout/Footer";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
-  title: "Your App",
-  description: "Your app description",
+  title: "Lindsey's Shop",
+  description: "A shop for all things quirky and unique!",
 };
 
 export default function RootLayout({

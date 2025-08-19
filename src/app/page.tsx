@@ -33,7 +33,7 @@ export default function HomePage() {
 			<div className="flex flex-col min-h-[60vh] items-center justify-center w-full mt-10 px-4">
 				<div className="relative w-4/5 sm:w-1/2 md:w-1/3 max-w-xs h-auto aspect-[16/14]">
 					<Image
-						src="/LindseyShopHangingSign.png"
+						src="/lindseyShopHangingSign.png"
 						alt="Lindsey Shop Logo"
 						fill
 						className="object-cover rounded"
