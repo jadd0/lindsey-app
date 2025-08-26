@@ -21,7 +21,7 @@ const NonScrollScreen = forwardRef<NonScrollScreenHandle, { children: React.Reac
     useImperativeHandle(ref, () => ({ inView }), [inView]);
 
     return (
-      <div className="h-[97vh]">
+      <div className="h-[97vh] w-screen">
         {children}
         <div className="h-[3vh]" ref={divRef} />
       </div>
