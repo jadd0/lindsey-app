@@ -24,16 +24,18 @@ export default function HomePage() {
 
 	const [favouriteItems, setFavouriteItems] = useState<Item[]>([]);
 
+	// Track window scroll position
+	const [scrollY, setScrollY] = useState(0);
+
 	// Page references for scroll tracking
 	const landingPageRef = useRef<NonScrollScreenHandle>(null);
 
-	// track if landing page is in view
+	// Track if landing page is in view
 	const [landingInView, setLandingInView] = useState(false);
 
 	// Custom hook to lock scroll on app root
 	function useAppScrollLock(locked: boolean) {
 		useEffect(() => {
-			// Target the scroll container, e.g. the app root (min-h-screen div in layout)
 			const appRoot = document.getElementById('app-scroll-container');
 			if (!appRoot) return;
 
@@ -50,13 +52,38 @@ export default function HomePage() {
 		}, [locked]);
 	}
 
+	function scrollToElement(id: string) {
+		console.log('scrolling to element:', id);
+		const element = document.getElementById(id);
+
+		if (element) {
+			element.scrollIntoView({ behavior: 'smooth' });
+		}
+		return;
+	}
+
+	// Handle favourite items response
 	useEffect(() => {
 		if (favouriteItemsResponse?.data) {
 			setFavouriteItems(favouriteItemsResponse.data);
 		}
 	}, [favouriteItemsResponse]);
 
-	// Poll handle for landing page in view
+	// Track window scroll position
+	useEffect(() => {
+		function handleScroll() {
+			console.log("jdfjdfjfjndfjnfd", landingInView)
+			setScrollY(window.scrollY);
+			if (landingInView) {
+				scrollToElement('about');
+			}
+		}
+		window.addEventListener('scroll', handleScroll);
+	
+		return () => window.removeEventListener('scroll', handleScroll);
+	}, [landingInView]);
+
+	// Poll for landing page view
 	useEffect(() => {
 		const interval = setInterval(() => {
 			setLandingInView(!!landingPageRef.current?.inView);
@@ -80,6 +107,7 @@ export default function HomePage() {
 
 	return (
 		<div className="flex flex-col w-full items-center justify-center overflow-x-hidden">
+
 			{/* Landing page */}
 			<NonScrollScreen ref={landingPageRef}>
 				<div className="flex flex-col min-h-[60vh] items-center justify-center w-full mt-10 px-4">
@@ -94,9 +122,14 @@ export default function HomePage() {
 				</div>
 			</NonScrollScreen>
 
+			<div className="min-w-screen min-h-screen"></div>
+
 			{/* About me section */}
 			<Fade triggerOnce>
-				<div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-6xl px-15 md:px-16 gap-6 my-10 place-items-center">
+				<div
+					className="grid grid-cols-1 md:grid-cols-2 w-full max-w-6xl px-15 md:px-16 gap-6 my-10 place-items-center"
+					id="about"
+				>
 					{/* Text */}
 					<div className="flex flex-col py-6">
 						<h2 className="text-3xl sm:text-4xl font-bold">About Me:</h2>
