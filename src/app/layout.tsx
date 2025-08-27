@@ -20,18 +20,13 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className="bg-[#1e60e1] text-white overflow-x-hidden">
+			<body className="bg-[#1e60e1] text-white ">
 				<ReactQueryClientProvider>
 					<Toaster position="top-right" closeButton={false} />
 					<AuthProvider>
 						<ReactLenis root />
-						<div
-							id="app-scroll-container"
-							className="flex flex-col min-h-screen"
-						>
-							<Navbar />
-							{children}
-						</div>
+						<Navbar />
+						{children}
 						<Footer />
 						<Analytics />
 					</AuthProvider>

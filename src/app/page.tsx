@@ -13,6 +13,7 @@ import NonScrollScreen, {
 	NonScrollScreenHandle,
 } from './_components/layout/NonScrollScreen';
 import { useLenis } from 'lenis/react';
+import AllAboutTheStory from './_components/home/AllAboutTheStory';
 
 export default function HomePage() {
 	const {
@@ -20,6 +21,7 @@ export default function HomePage() {
 		isLoading,
 		isError,
 	} = useGetFavouriteItems();
+
 	const lenis = useLenis();
 
 	const [favouriteItems, setFavouriteItems] = useState<Item[]>([]);
@@ -33,34 +35,7 @@ export default function HomePage() {
 	// Track if landing page is in view
 	const [landingInView, setLandingInView] = useState(false);
 
-	// Custom hook to lock scroll on app root
-	function useAppScrollLock(locked: boolean) {
-		useEffect(() => {
-			const appRoot = document.getElementById('app-scroll-container');
-			if (!appRoot) return;
 
-			if (locked) {
-				const previousOverflow = appRoot.style.overflow;
-				appRoot.style.overflow = 'hidden';
-				return () => {
-					appRoot.style.overflow = previousOverflow;
-				};
-			}
-			return () => {
-				appRoot.style.overflow = '';
-			};
-		}, [locked]);
-	}
-
-	function scrollToElement(id: string) {
-		console.log('scrolling to element:', id);
-		const element = document.getElementById(id);
-
-		if (element) {
-			element.scrollIntoView({ behavior: 'smooth' });
-		}
-		return;
-	}
 
 	// Handle favourite items response
 	useEffect(() => {
@@ -72,10 +47,9 @@ export default function HomePage() {
 	// Track window scroll position
 	useEffect(() => {
 		function handleScroll() {
-			console.log("jdfjdfjfjndfjnfd", landingInView)
 			setScrollY(window.scrollY);
 			if (landingInView) {
-				scrollToElement('about');
+
 			}
 		}
 		window.addEventListener('scroll', handleScroll);
@@ -83,30 +57,10 @@ export default function HomePage() {
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, [landingInView]);
 
-	// Poll for landing page view
-	useEffect(() => {
-		const interval = setInterval(() => {
-			setLandingInView(!!landingPageRef.current?.inView);
-		}, 100);
-		return () => clearInterval(interval);
-	}, []);
 
-	useEffect(() => {
-		if (!lenis) return;
-		if (landingInView) {
-			lenis.stop();
-		} else {
-			lenis.start();
-		}
-		// Cleanup: On unmount, always resume scroll
-		return () => lenis?.start();
-	}, [landingInView, lenis]);
-
-	// Lock scroll when landing page is in view
-	useAppScrollLock(landingInView);
 
 	return (
-		<div className="flex flex-col w-full items-center justify-center overflow-x-hidden">
+		<div className="flex flex-col w-full items-center justify-center">
 
 			{/* Landing page */}
 			<NonScrollScreen ref={landingPageRef}>
@@ -123,6 +77,9 @@ export default function HomePage() {
 			</NonScrollScreen>
 
 			<div className="min-w-screen min-h-screen"></div>
+			<AllAboutTheStory />
+			<div className="min-w-screen min-h-screen"></div>
+
 
 			{/* About me section */}
 			<Fade triggerOnce>
