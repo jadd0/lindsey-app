@@ -1,9 +1,15 @@
 import { useState, useEffect, useRef, useImperativeHandle } from 'react';
 
-export default function Typewriter({ text }: { text: string }) {
+export default function Typewriter({
+	text,
+	hasFinished,
+}: {
+	text: string;
+	hasFinished: () => void;
+}) {
 	const [displayedText, setDisplayedText] = useState('');
 	const [inView, setInView] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false);
+	const [hasStarted, setHasStarted] = useState(false);
 
 	const divRef = useRef<HTMLDivElement>(null);
 
@@ -13,12 +19,17 @@ export default function Typewriter({ text }: { text: string }) {
 		let idx = 0;
 		const interval = setInterval(() => {
 			if (!inView || hasStarted) return;
-      setHasStarted(true);
+			setHasStarted(true);
 			setDisplayedText(text.substring(0, idx + 1));
 			idx += 1;
-			if (idx >= text.length) clearInterval(interval);
+			if (idx >= text.length) {
+				hasFinished();
+				clearInterval(interval);
+			}
 		}, 30);
-		return () => clearInterval(interval);
+		return () => {
+			clearInterval(interval);
+		};
 	}, [inView, text]);
 
 	useEffect(() => {

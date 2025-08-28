@@ -24,7 +24,7 @@ export default function RootLayout({
 				<ReactQueryClientProvider>
 					<Toaster position="top-right" closeButton={false} />
 					<AuthProvider>
-						<ReactLenis root />
+
 						<Navbar />
 						{children}
 						<Footer />

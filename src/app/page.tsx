@@ -13,7 +13,8 @@ import NonScrollScreen, {
 	NonScrollScreenHandle,
 } from './_components/layout/NonScrollScreen';
 import { useLenis } from 'lenis/react';
-import AllAboutTheStory from './_components/home/AllAboutTheStory';
+import BlandSection from './_components/home/bland/BlandSection';
+import { gsap } from 'gsap';
 
 export default function HomePage() {
 	const {
@@ -22,7 +23,6 @@ export default function HomePage() {
 		isError,
 	} = useGetFavouriteItems();
 
-	const lenis = useLenis();
 
 	const [favouriteItems, setFavouriteItems] = useState<Item[]>([]);
 
@@ -34,8 +34,6 @@ export default function HomePage() {
 
 	// Track if landing page is in view
 	const [landingInView, setLandingInView] = useState(false);
-
-
 
 	// Handle favourite items response
 	useEffect(() => {
@@ -49,19 +47,15 @@ export default function HomePage() {
 		function handleScroll() {
 			setScrollY(window.scrollY);
 			if (landingInView) {
-
 			}
 		}
 		window.addEventListener('scroll', handleScroll);
-	
+
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, [landingInView]);
 
-
-
 	return (
 		<div className="flex flex-col w-full items-center justify-center">
-
 			{/* Landing page */}
 			<NonScrollScreen ref={landingPageRef}>
 				<div className="flex flex-col min-h-[60vh] items-center justify-center w-full mt-10 px-4">
@@ -76,10 +70,7 @@ export default function HomePage() {
 				</div>
 			</NonScrollScreen>
 
-			<div className="min-w-screen min-h-screen"></div>
-			<AllAboutTheStory />
-			<div className="min-w-screen min-h-screen"></div>
-
+			<BlandSection />
 
 			{/* About me section */}
 			<Fade triggerOnce>
