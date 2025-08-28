@@ -11,6 +11,8 @@ export default function BlandSection() {
 	const horizontalRef = useRef<HTMLDivElement | null>(null);
 	const [height, setHeight] = useState(window.innerHeight);
 
+	console.log('height', height);
+
 	useLayoutEffect(() => {
 		const container = containerRef.current;
 		const horizontal = horizontalRef.current;
@@ -45,7 +47,7 @@ export default function BlandSection() {
 		});
 
 		// Recalculate on resize
-		window.addEventListener('resize', updateHeight);
+		// window.addEventListener('resize', updateHeight);
 
 		return () => {
 			window.removeEventListener('resize', updateHeight);
@@ -54,14 +56,13 @@ export default function BlandSection() {
 	}, []);
 
 	const synonyms = [
-		'dull',
-		'uninteresting',
-		'tedious',
-		'boring',
-		'monotonous',
-		'insipid',
-		'mundane',
-		'drab',
+		'distinctive',
+		'interesting',
+		'special',
+		'quirky',
+		'eccentric',
+		'rare',
+		'unrepeatable'
 	];
 
 	return (
@@ -70,9 +71,7 @@ export default function BlandSection() {
 			style={{
 				width: '100vw',
 				overflow: 'hidden',
-				minHeight: `${Math.ceil(
-					horizontalRef.current?.clientWidth + window.innerHeight
-				)}px`,
+				minHeight: `${height}px`,
 			}}
 		>
 			{/* Sticky header */}
@@ -113,9 +112,9 @@ export default function BlandSection() {
 								justifyContent: 'center',
 								fontSize: '4rem',
 								fontWeight: 'bold',
-								color: `${word === 'boring' ? '#ff568c' : ''}`, 
-								flexShrink: 0, // ✅ prevents squashing
-								paddingLeft: '2rem',
+								color: `${word === 'quirky' ? '#ff568c' : ''}`, 
+								flexShrink: 0, 
+								paddingLeft: `${index === 0 ? '5rem' : '2rem'}`,
 							}}
 						>
 							{word}
