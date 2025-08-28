@@ -2,93 +2,62 @@ import React, { useRef, useLayoutEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BlandDefinition from './BlandDefintion';
+import { Fade } from 'react-awesome-reveal';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function BlandSection() {
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const horizontalRef = useRef<HTMLDivElement | null>(null);
+	const [height, setHeight] = useState(window.innerHeight);
 
 	useLayoutEffect(() => {
 		const container = containerRef.current;
 		const horizontal = horizontalRef.current;
 		if (!container || !horizontal) return;
 
-		const getScrollAmount = () => {
-			const scrollWidth = horizontal.scrollWidth;
-			const windowWidth = window.innerWidth;
-			return scrollWidth - windowWidth;
-		};
-		
-		let ctx = gsap.context(() => {
-			// Calculate the distance the horizontal content needs to scroll
+		const updateHeight = () => {
+			console.log('horizontal');
+			const totalScroll = horizontal.scrollWidth - window.innerWidth;
+			setHeight(totalScroll + window.innerHeight);
 
-			// Set up the horizontal scroll animation
-			const scrollAmount = getScrollAmount();
+			console.log(height);
 
-			gsap.to(horizontal, {
-				x: () => -getScrollAmount(),
-				ease: 'none',
-				scrollTrigger: {
-					trigger: container,
-					start: 'top top',
-					end: () => `+=${getScrollAmount()}`, // This is the key fix
-					pin: true,
-					scrub: true,
-					anticipatePin: 1,
-					invalidateOnRefresh: true, // Important for recalculating on resize
-					onRefresh: () => {
-						// Update container height to match scroll distance
-						const newScrollAmount = getScrollAmount();
-						container.style.height = `${
-							newScrollAmount + window.innerHeight
-						}px`;
-					},
-				},
-			});
-
-			// Set initial height
-			container.style.height = `${scrollAmount + window.innerHeight}px`;
-		}, container); // Scope to container
-
-		// Handle resize
-		const handleResize = () => {
-			ctx.revert(); // Clean up
-			// Recreate the context with new calculations
-			ctx = gsap.context(() => {
-				const scrollAmount = getScrollAmount();
-
-				gsap.to(horizontal, {
-					x: () => -getScrollAmount(),
-					ease: 'none',
-					scrollTrigger: {
-						trigger: container,
-						start: 'top top',
-						end: () => `+=${getScrollAmount()}`,
-						pin: true,
-						scrub: true,
-						anticipatePin: 1,
-						invalidateOnRefresh: true,
-					},
-				});
-
-				container.style.height = `${scrollAmount + window.innerHeight}px`;
-			}, container);
+			// kill/re-init ScrollTrigger so it's in sync on resize
+			ScrollTrigger.refresh();
 		};
 
-		window.addEventListener('resize', handleResize);
+		// Initial run
+		updateHeight();
+
+		// GSAP horizontal animation
+		gsap.to(horizontal, {
+			x: () => -(horizontal.scrollWidth - window.innerWidth + 50),
+			ease: 'none',
+			scrollTrigger: {
+				trigger: container,
+				start: 'top top',
+				end: () => `+=${horizontal.scrollWidth - window.innerWidth + 50}`,
+				pin: true,
+				scrub: true,
+				anticipatePin: 1,
+			},
+		});
+
+		// Recalculate on resize
+		window.addEventListener('resize', updateHeight);
 
 		return () => {
-			window.removeEventListener('resize', handleResize);
-			ctx.revert(); // Clean up GSAP context
+			window.removeEventListener('resize', updateHeight);
+			ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 		};
 	}, []);
 
 	const synonyms = [
-		'boring',
 		'dull',
 		'uninteresting',
 		'tedious',
+		'boring',
 		'monotonous',
 		'insipid',
 		'mundane',
@@ -101,7 +70,9 @@ export default function BlandSection() {
 			style={{
 				width: '100vw',
 				overflow: 'hidden',
-				// Height will be set dynamically via JavaScript
+				minHeight: `${Math.ceil(
+					horizontalRef.current?.clientWidth + window.innerHeight
+				)}px`,
 			}}
 		>
 			{/* Sticky header */}
@@ -121,34 +92,37 @@ export default function BlandSection() {
 			</div>
 
 			{/* Horizontal scroll content */}
-			<div
-				ref={horizontalRef}
-				style={{
-					display: 'flex',
-					position: 'absolute',
-					bottom: 100,
-					left: 0,
-				}}
-			>
-				{synonyms.map((word, index) => (
-					<div
-						key={index}
-						style={{
-							width: 'auto',
-							height: '100%',
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							fontSize: '4rem',
-							fontWeight: 'bold',
-							flexShrink: 0,
-							paddingLeft: '2rem',
-						}}
-					>
-						{word}
-					</div>
-				))}
-			</div>
+			<Fade cascade triggerOnce delay={3300}>
+				<div
+					ref={horizontalRef}
+					style={{
+						display: 'flex',
+						position: 'relative',
+						bottom: 0,
+						left: 0,
+					}}
+				>
+					{synonyms.map((word, index) => (
+						<div
+							key={index}
+							style={{
+								width: 'auto',
+								height: '100%',
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+								fontSize: '4rem',
+								fontWeight: 'bold',
+								color: `${word === 'boring' ? '#ff568c' : ''}`, 
+								flexShrink: 0, // ✅ prevents squashing
+								paddingLeft: '2rem',
+							}}
+						>
+							{word}
+						</div>
+					))}
+				</div>
+			</Fade>
 		</section>
 	);
 }
