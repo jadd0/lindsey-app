@@ -21,11 +21,9 @@ export default function BlandDefinition() {
 				}}
 			/>
 
-			<div className="w-screen flex flex-col items-start pl-10">
-				<Fade cascade triggerOnce delay={2000}>
-					<h4 className={`text-5xl font-bold`}>in</h4>
-					<h4 className="text-5xl font-bold pl-12">other</h4>
-					<h4 className="text-5xl font-bold pl-25">words...</h4>
+			<div className="w-screen flex flex-col p-10">
+				<Fade triggerOnce delay={2000}>
+					<h4 className={`text-6xl font-bold`}>in other words...</h4>
 				</Fade>
 			</div>
 		</div>

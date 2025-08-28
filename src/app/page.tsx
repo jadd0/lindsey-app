@@ -13,7 +13,7 @@ import NonScrollScreen, {
 	NonScrollScreenHandle,
 } from './_components/layout/NonScrollScreen';
 import { useLenis } from 'lenis/react';
-import BlandSection from './_components/home/bland/BlandSection';
+import BlandSection from './_components/home/unique/UniqueSection';
 import { gsap } from 'gsap';
 
 export default function HomePage() {

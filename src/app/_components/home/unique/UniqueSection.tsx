@@ -1,7 +1,7 @@
 import React, { useRef, useLayoutEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import BlandDefinition from './BlandDefintion';
+import BlandDefinition from './UniqueDefintion';
 import { Fade } from 'react-awesome-reveal';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -91,7 +91,7 @@ export default function BlandSection() {
 			</div>
 
 			{/* Horizontal scroll content */}
-			<Fade cascade triggerOnce delay={3300}>
+			<Fade cascade triggerOnce delay={2500}>
 				<div
 					ref={horizontalRef}
 					style={{
