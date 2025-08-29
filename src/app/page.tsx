@@ -13,7 +13,8 @@ import NonScrollScreen, {
 	NonScrollScreenHandle,
 } from './_components/layout/NonScrollScreen';
 import { useLenis } from 'lenis/react';
-import BlandSection from './_components/home/unique/UniqueSection';
+import UniqueSection from './_components/home/unique/UniqueSection';
+import BackgroundSection from './_components/home/background/BackgroundSection';
 import { gsap } from 'gsap';
 
 export default function HomePage() {
@@ -70,7 +71,8 @@ export default function HomePage() {
 				</div>
 			</NonScrollScreen>
 
-			<BlandSection />
+			<UniqueSection />
+			<BackgroundSection />
 
 			{/* About me section */}
 			<Fade triggerOnce>
