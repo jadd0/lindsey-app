@@ -38,7 +38,7 @@ export default function VideoScrollComponent() {
 				tlRef.current.kill();
 			}
 
-			// Create the timeline with ScrollTrigger
+			// Main scrub timeline for video
 			tlRef.current = gsap.timeline({
 				scrollTrigger: {
 					trigger: container,
@@ -48,39 +48,42 @@ export default function VideoScrollComponent() {
 					scrub: 1,
 					onUpdate: (self) => {
 						const progress = self.progress;
-						// Only update currentTime during the first 66% of the scroll
 						if (progress <= 0.66) {
 							video.currentTime = (progress / 0.66) * video.duration;
 						} else {
-							// Keep video at the end frame during zoom
 							video.currentTime = video.duration;
 						}
 					},
 				},
 			});
 
-			// Video scrubbing animation (first 66% of scroll)
+			// Video scrubbing and zoom
 			tlRef.current.fromTo(
 				video,
 				{ currentTime: 0 },
-				{
-					currentTime: video.duration,
-					duration: 0.66,
-					ease: 'none',
-				}
+				{ currentTime: video.duration, duration: 0.66, ease: 'none' }
 			);
-
-			// Zoom effect after video completes (remaining 34% of scroll)
 			tlRef.current.to(
 				video,
 				{
 					scale: 12,
-					transformOrigin: 'center 5%',
+					transformOrigin: 'center 7%',
 					duration: 0.34,
 					ease: 'power2.out',
 				},
 				0.66
 			);
+
+			// Video fade out during last 10% of the timeline - ADD THIS TO THE MAIN TIMELINE
+			tlRef.current.to(
+				video,
+				{
+					opacity: 0,
+					duration: 0.1, // 10% of timeline duration
+					ease: 'power2.out',
+				},
+				0.9
+			); // Start at 90% of timeline
 		};
 
 		video.addEventListener('loadedmetadata', handleLoadedMetadata);
@@ -133,7 +136,7 @@ export default function VideoScrollComponent() {
 	return (
 		<div className="scroll-container">
 			<div className="spacer" style={{ height: '50vh' }}>
-
+				<h2>Content before video</h2>
 			</div>
 
 			<div ref={containerRef} className="video-container w-1/2">
@@ -150,9 +153,6 @@ export default function VideoScrollComponent() {
 					}}
 					className="rounded-4xl border-2 border-[#0089ff]"
 				/>
-			</div>
-
-			<div className="spacer" style={{ height: '200vh' }}>
 			</div>
 		</div>
 	);
