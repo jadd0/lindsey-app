@@ -50,7 +50,6 @@ export default function VideoScrollComponent() {
 	return (
 		<div className="scroll-container">
 			<div className="spacer" style={{ height: '50vh' }}>
-				<h2>Scroll down to see video effect</h2>
 			</div>
 
 			<div ref={containerRef} className="video-container w-1/2">
