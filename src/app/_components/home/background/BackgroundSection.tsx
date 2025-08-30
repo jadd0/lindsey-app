@@ -21,7 +21,6 @@ export default function VideoScrollComponent() {
 						video.pause();
 					})
 					.catch(() => {
-						// Handle play failed
 						console.log('iOS video activation failed');
 					});
 			}
@@ -35,7 +34,6 @@ export default function VideoScrollComponent() {
 		if (!video || !container) return;
 
 		const handleLoadedMetadata = () => {
-			// Clean up any existing timeline
 			if (tlRef.current) {
 				tlRef.current.kill();
 			}
@@ -46,38 +44,55 @@ export default function VideoScrollComponent() {
 					trigger: container,
 					start: 'top top',
 					pin: true,
-					end: '+=200%',
-					scrub: 1, // Smooth scrubbing
+					end: '+=300%',
+					scrub: 1,
 					onUpdate: (self) => {
-						// Update video currentTime based on scroll progress
 						const progress = self.progress;
-						video.currentTime = progress * video.duration;
+						// Only update currentTime during the first 66% of the scroll
+						if (progress <= 0.66) {
+							video.currentTime = (progress / 0.66) * video.duration;
+						} else {
+							// Keep video at the end frame during zoom
+							video.currentTime = video.duration;
+						}
 					},
 				},
 			});
 
-			// Add the animation to the timeline
+			// Video scrubbing animation (first 66% of scroll)
 			tlRef.current.fromTo(
 				video,
 				{ currentTime: 0 },
-				{ currentTime: video.duration, duration: 1 }
+				{
+					currentTime: video.duration,
+					duration: 0.66,
+					ease: 'none',
+				}
+			);
+
+			// Zoom effect after video completes (remaining 34% of scroll)
+			tlRef.current.to(
+				video,
+				{
+					scale: 12,
+					transformOrigin: 'center 5%',
+					duration: 0.34,
+					ease: 'power2.out',
+				},
+				0.66
 			);
 		};
 
-		// Add event listeners
 		video.addEventListener('loadedmetadata', handleLoadedMetadata);
 
-		// iOS touch activation
 		const handleFirstTouch = () => {
 			activateVideoOnIOS();
 			document.removeEventListener('touchstart', handleFirstTouch);
 		};
 		document.addEventListener('touchstart', handleFirstTouch);
 
-		// Preload video
 		video.load();
 
-		// Cleanup function
 		return () => {
 			if (video) {
 				video.removeEventListener('loadedmetadata', handleLoadedMetadata);
@@ -118,7 +133,7 @@ export default function VideoScrollComponent() {
 	return (
 		<div className="scroll-container">
 			<div className="spacer" style={{ height: '50vh' }}>
-				<h2>Content before video</h2>
+
 			</div>
 
 			<div ref={containerRef} className="video-container w-1/2">
@@ -133,12 +148,11 @@ export default function VideoScrollComponent() {
 						width: '100%',
 						height: 'auto',
 					}}
-					className='rounded-4xl border-2 border-[#0089ff]'
+					className="rounded-4xl border-2 border-[#0089ff]"
 				/>
 			</div>
 
 			<div className="spacer" style={{ height: '200vh' }}>
-				<h2>Content after video - scroll to see video scrubbing</h2>
 			</div>
 		</div>
 	);
