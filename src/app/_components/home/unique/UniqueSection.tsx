@@ -82,7 +82,6 @@ export default function BlandSection() {
 					width: '100vw',
 					zIndex: 10,
 					color: '#fff',
-					padding: '1.5rem',
 					fontSize: '2rem',
 					textAlign: 'center',
 				}}
@@ -91,7 +90,7 @@ export default function BlandSection() {
 			</div>
 
 			{/* Horizontal scroll content */}
-			<Fade cascade triggerOnce delay={2500}>
+			<Fade cascade triggerOnce delay={2200}>
 				<div
 					ref={horizontalRef}
 					style={{

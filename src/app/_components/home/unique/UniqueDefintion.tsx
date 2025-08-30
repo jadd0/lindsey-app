@@ -22,7 +22,7 @@ export default function BlandDefinition() {
 			/>
 
 			<div className="w-screen flex flex-col p-10">
-				<Fade triggerOnce delay={2000}>
+				<Fade triggerOnce delay={1700}>
 					<h4 className={`text-6xl font-bold`}>in other words...</h4>
 				</Fade>
 			</div>
