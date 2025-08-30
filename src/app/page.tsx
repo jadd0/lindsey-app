@@ -15,6 +15,7 @@ import NonScrollScreen, {
 import { useLenis } from 'lenis/react';
 import UniqueSection from './_components/home/unique/UniqueSection';
 import BackgroundSection from './_components/home/background/BackgroundSection';
+import FirstTextSection from './_components/home/firstText/FirstTextSection';
 import { gsap } from 'gsap';
 
 export default function HomePage() {
@@ -72,6 +73,7 @@ export default function HomePage() {
 			</NonScrollScreen>
 
 			<UniqueSection />
+			<FirstTextSection />
 			<BackgroundSection />
 
 			{/* About me section */}
