@@ -6,7 +6,6 @@ import BackgroundSectionHeading from './BackgroundSectionHeading';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-
 export default function VideoScrollComponent() {
 	const containerRef = useRef(null);
 	const videoRef = useRef(null);
@@ -44,7 +43,7 @@ export default function VideoScrollComponent() {
 			tlRef.current = gsap.timeline({
 				scrollTrigger: {
 					trigger: container,
-					start: 'top 50vh',
+					start: 'top top',
 					pin: true,
 					end: '+=300%',
 					scrub: 1,
@@ -78,7 +77,7 @@ export default function VideoScrollComponent() {
 
 			// Video fade out during last 10% of the timeline
 			tlRef.current.to(
-				video,
+				container,
 				{
 					opacity: 0,
 					duration: 0.1, // 10% of timeline duration
@@ -137,11 +136,10 @@ export default function VideoScrollComponent() {
 
 	return (
 		<div className="scroll-container">
-			<div className="spacer" style={{ height: '50vh' }}>
-			</div>
+			<div className="spacer" style={{ height: '30vh' }}></div>
 
 			<div ref={containerRef} className="video-container w-1/2">
-			<BackgroundSectionHeading />
+				<BackgroundSectionHeading />
 				<video
 					ref={videoRef}
 					src="/output.mp4"
