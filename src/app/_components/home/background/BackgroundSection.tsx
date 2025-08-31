@@ -2,8 +2,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { useRef, useEffect } from 'react';
+import BackgroundSectionHeading from './BackgroundSectionHeading';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
+
 
 export default function VideoScrollComponent() {
 	const containerRef = useRef(null);
@@ -42,7 +44,7 @@ export default function VideoScrollComponent() {
 			tlRef.current = gsap.timeline({
 				scrollTrigger: {
 					trigger: container,
-					start: 'top top',
+					start: 'top 50vh',
 					pin: true,
 					end: '+=300%',
 					scrub: 1,
@@ -74,7 +76,7 @@ export default function VideoScrollComponent() {
 				0.66
 			);
 
-			// Video fade out during last 10% of the timeline - ADD THIS TO THE MAIN TIMELINE
+			// Video fade out during last 10% of the timeline
 			tlRef.current.to(
 				video,
 				{
@@ -82,8 +84,8 @@ export default function VideoScrollComponent() {
 					duration: 0.1, // 10% of timeline duration
 					ease: 'power2.out',
 				},
-				0.9
-			); // Start at 90% of timeline
+				0.9 // Start at 90% of timeline
+			);
 		};
 
 		video.addEventListener('loadedmetadata', handleLoadedMetadata);
@@ -136,10 +138,10 @@ export default function VideoScrollComponent() {
 	return (
 		<div className="scroll-container">
 			<div className="spacer" style={{ height: '50vh' }}>
-				<h2>Content before video</h2>
 			</div>
 
 			<div ref={containerRef} className="video-container w-1/2">
+			<BackgroundSectionHeading />
 				<video
 					ref={videoRef}
 					src="/output.mp4"
