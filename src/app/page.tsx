@@ -1,18 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { Fade } from 'react-awesome-reveal';
-import { useGetFavouriteItems } from './_hooks/items.hooks';
-import ItemPreview from './_components/ssr/item/ItemPreview';
-import ItemPreviewSkeleton from './_components/ssr/item/ItemPreviewSkeleton';
-import { useEffect, useRef, useState } from 'react';
-import { Item } from './_shared/types';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import NonScrollScreen, {
-	NonScrollScreenHandle,
-} from './_components/layout/NonScrollScreen';
-import { useLenis } from 'lenis/react';
 import UniqueSection from './_components/home/unique/UniqueSection';
 import BackgroundSection from './_components/home/background/BackgroundSection';
 import QuirkySection from './_components/home/quirkySection/QuirkySection';
