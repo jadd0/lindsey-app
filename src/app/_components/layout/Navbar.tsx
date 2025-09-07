@@ -8,7 +8,7 @@ export default function Navbar() {
 
   return (
     <div className="w-full flex justify-center items-center sticky top-6 z-1000">
-      <nav className="p-3 gap-5 bg-white rounded-4xl flex flex-row flex-nowrap border-3 border-[#ff568c]">
+      <nav className="p-3 gap-5 bg-white rounded-4xl flex flex-row flex-nowrap">
         <Link href={"/"}>
           <House color="black" width={20} />
         </Link>
