@@ -10,7 +10,7 @@ export default function HomePage() {
 	return (
 		<div className="flex flex-col w-full items-center justify-center">
 			{/* Landing page */}
-			<div className="flex flex-col min-h-[60vh] items-center justify-center w-full mt-10 px-4">
+			<div className="flex flex-col min-h-[80vh] items-center justify-center w-full mt-10 px-4">
 				<div className="relative w-4/5 sm:w-1/2 md:w-1/3 max-w-xs h-auto aspect-[16/14]">
 					<Image
 						src="/lindseyShopHangingSign.png"
@@ -23,7 +23,6 @@ export default function HomePage() {
 
 			<UniqueSection />
 			<QuirkySection />
-			<BackgroundSection />
 			<ShopPreviewSection />
 		</div>
 	);

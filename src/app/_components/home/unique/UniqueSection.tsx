@@ -78,7 +78,7 @@ export default function BlandSection() {
 			<div
 				style={{
 					position: 'sticky',
-					top: 0,
+					top: '15vh',
 					width: '100vw',
 					zIndex: 10,
 					color: '#fff',
@@ -98,6 +98,7 @@ export default function BlandSection() {
 						position: 'relative',
 						bottom: 0,
 						left: 0,
+						marginTop: '15vh',
 					}}
 				>
 					{synonyms.map((word, index) => (
@@ -113,7 +114,7 @@ export default function BlandSection() {
 								fontWeight: 'bold',
 								color: `${word === 'quirky' ? '#ff568c' : ''}`, 
 								flexShrink: 0, 
-								paddingLeft: `${index === 0 ? '5rem' : '2rem'}`,
+								paddingLeft: `${index === 0 ? '5rem' : '6vw'}`,
 							}}
 						>
 							{word}
