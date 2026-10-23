@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function BlandSection() {
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const horizontalRef = useRef<HTMLDivElement | null>(null);
-	const [height, setHeight] = useState(window.innerHeight);
+	const [height, setHeight] = useState(() => (typeof window === 'undefined' ? 0 : window.innerHeight));
 
 	console.log('height', height);
 
